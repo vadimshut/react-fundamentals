@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes, { shape } from 'prop-types';
 import { Button } from '../../common/Button/Button';
-import { BUTTON_NAMES, mockedAuthorsList } from '../../constants';
+import { BUTTON_NAMES } from '../../constants';
 
 import './course-card.scss';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
@@ -13,10 +13,11 @@ export const CourseCard = ({
 	creationDate,
 	duration,
 	authors,
+	authorsList,
 }) => {
 	const courseDuration = getCourseDuration(duration);
 	const courseCreationDate = formatCreationDate(creationDate);
-	const authorsToString = getAuthors(authors, mockedAuthorsList);
+	const authorsToString = getAuthors(authors, authorsList);
 
 	return (
 		<div className='CourseCard'>
@@ -53,6 +54,12 @@ CourseCard.propTypes = {
 	creationDate: PropTypes.string,
 	duration: PropTypes.number,
 	authors: PropTypes.arrayOf(PropTypes.string),
+	authorsList: PropTypes.arrayOf(
+		shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
 };
 
 CourseCard.defaultProps = {
@@ -61,4 +68,5 @@ CourseCard.defaultProps = {
 	creationDate: null,
 	duration: null,
 	authors: null,
+	authorsList: [],
 };
