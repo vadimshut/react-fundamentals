@@ -2,22 +2,22 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './button.scss';
 
-export const Button = ({ buttonText, className, onClick }) => {
+export const Button = ({ buttonName, className, onClick }) => {
 	return (
 		<button className={classnames('button', className)} onClick={onClick}>
-			{buttonText}
+			{buttonName}
 		</button>
 	);
 };
 
 Button.propTypes = {
-	buttonText: PropTypes.string,
+	buttonName: PropTypes.string,
 	className: PropTypes.string,
 	onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
-	buttonText: null,
+	buttonName: null,
 	className: null,
 	onClick: null,
 };

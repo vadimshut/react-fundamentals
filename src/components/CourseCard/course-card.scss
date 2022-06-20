@@ -1,0 +1,36 @@
+.CourseCard {
+  outline: 2px solid blue;
+  width: 90%;
+  display: flex;
+  column-gap: 1.5rem;
+  margin: 1rem auto;
+  padding: 1rem;
+
+  .title{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .leftContainer {
+    width: 70%;
+  }
+
+  .rightContainer {
+    width: 30%;
+    margin-top: 1rem;
+
+    .authors,
+    .duration {
+      margin-bottom: 0.3rem;
+    }
+
+    .created {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .buttonWrapper{
+    display: flex;
+    justify-content: center;
+  }
+}

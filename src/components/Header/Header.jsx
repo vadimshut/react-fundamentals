@@ -10,7 +10,7 @@ export const Header = () => {
 			<Logo />
 			<div className='buttonWrapper'>
 				<div>Dave</div>
-				<Button buttonText={BUTTON_NAMES.logout} />
+				<Button buttonName={BUTTON_NAMES.logout} />
 			</div>
 		</div>
 	);
