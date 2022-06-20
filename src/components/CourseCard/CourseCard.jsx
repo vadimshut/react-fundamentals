@@ -1,17 +1,18 @@
-import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { Button } from '../../common/Button/Button';
 import { BUTTON_NAMES } from '../../constants';
+
 import './course-card.scss';
+
 export const CourseCard = ({
 	title,
 	description,
 	creationDate,
 	duration,
 	authors,
-	className,
 }) => {
 	return (
-		<div className={classnames('CourseCard', className)}>
+		<div className='CourseCard'>
 			<div className='leftContainer '>
 				<div className='title '>
 					<b>{title}</b>
@@ -37,4 +38,20 @@ export const CourseCard = ({
 			</div>
 		</div>
 	);
+};
+
+CourseCard.propTypes = {
+	title: PropTypes.string,
+	description: PropTypes.string,
+	creationDate: PropTypes.string,
+	duration: PropTypes.number,
+	authors: PropTypes.arrayOf(PropTypes.string),
+};
+
+CourseCard.defaultProps = {
+	title: null,
+	description: null,
+	creationDate: null,
+	duration: null,
+	authors: null,
 };

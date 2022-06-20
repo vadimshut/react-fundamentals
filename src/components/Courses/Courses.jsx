@@ -1,6 +1,7 @@
-import './courses.scss';
 import { mockedCoursesList } from '../../constants';
 import { CourseCard } from '../CourseCard/CourseCard';
+
+import './courses.scss';
 
 export const Courses = () => {
 	return (
