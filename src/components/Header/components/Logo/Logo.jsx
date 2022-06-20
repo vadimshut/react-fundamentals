@@ -1,6 +1,6 @@
 import './logo.scss';
 
-const logo = require('../../../../assets/epamLogo.png');
+const logo = require('../../../../assets/logo.png');
 
 export const Logo = () => {
 	return (
