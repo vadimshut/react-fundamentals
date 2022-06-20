@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { Button } from '../../common/Button/Button';
-import { BUTTON_NAMES } from '../../constants';
+import { BUTTON_NAMES, mockedAuthorsList } from '../../constants';
 
 import './course-card.scss';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
+import { formatCreationDate } from '../../helpers/formatCreationDate';
+import { getAuthors } from '../../helpers/getAuthors';
 
 export const CourseCard = ({
 	title,
@@ -13,6 +15,8 @@ export const CourseCard = ({
 	authors,
 }) => {
 	const courseDuration = getCourseDuration(duration);
+	const courseCreationDate = formatCreationDate(creationDate);
+	const authorsToString = getAuthors(authors, mockedAuthorsList);
 
 	return (
 		<div className='CourseCard'>
@@ -25,7 +29,7 @@ export const CourseCard = ({
 			<div className='rightContainer'>
 				<div className='authors'>
 					<b>Authors: </b>
-					<span>{authors}</span>
+					<span>{authorsToString}</span>
 				</div>
 				<div className='duration'>
 					<b>Duration: </b>
@@ -33,7 +37,7 @@ export const CourseCard = ({
 				</div>
 				<div className='created'>
 					<b>Created: </b>
-					<span>{creationDate}</span>
+					<span>{courseCreationDate}</span>
 				</div>
 				<div className='buttonWrapper'>
 					<Button buttonName={BUTTON_NAMES.showCourse} />
