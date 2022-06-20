@@ -3,6 +3,7 @@ import { Button } from '../../common/Button/Button';
 import { BUTTON_NAMES } from '../../constants';
 
 import './course-card.scss';
+import { getCourseDuration } from '../../helpers/getCourseDuration';
 
 export const CourseCard = ({
 	title,
@@ -11,6 +12,8 @@ export const CourseCard = ({
 	duration,
 	authors,
 }) => {
+	const courseDuration = getCourseDuration(duration);
+
 	return (
 		<div className='CourseCard'>
 			<div className='leftContainer '>
@@ -26,7 +29,7 @@ export const CourseCard = ({
 				</div>
 				<div className='duration'>
 					<b>Duration: </b>
-					<span>{duration}</span>
+					<span>{courseDuration}</span>
 				</div>
 				<div className='created'>
 					<b>Created: </b>

@@ -9,6 +9,7 @@ export const Courses = () => {
 			{mockedCoursesList.map(
 				({ id, title, description, creationDate, duration, authors }) => (
 					<CourseCard
+						key={id}
 						title={title}
 						description={description}
 						creationDate={creationDate}
