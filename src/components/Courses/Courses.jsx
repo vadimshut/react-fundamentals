@@ -6,9 +6,12 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 import { CreateCourse } from '../CreateCourse/CreateCourse';
 
 import './courses.scss';
+import { BUTTON_NAMES } from '../../constants';
+import { Button } from '../../common/Button/Button';
 
 export const Courses = ({ coursesList, authorsList }) => {
 	const [filteredCoursesList, setFilteredCoursesList] = useState(coursesList);
+	const [shouldShowCreateCourse, setShouldShowCreateCourse] = useState(false);
 
 	const handleClickSearch = (searchValue) => {
 		const filteredCourses = coursesList.filter(
@@ -21,22 +24,31 @@ export const Courses = ({ coursesList, authorsList }) => {
 
 	return (
 		<div className='courses'>
-			<div className='coursesControlsWrapper'>
-				<SearchBar onClick={handleClickSearch} />
-				<CreateCourse />
-			</div>
-			{filteredCoursesList.map(
-				({ id, title, description, creationDate, duration, authors }) => (
-					<CourseCard
-						key={id}
-						title={title}
-						description={description}
-						creationDate={creationDate}
-						duration={duration}
-						authors={authors}
-						authorsList={authorsList}
-					/>
-				)
+			{shouldShowCreateCourse && <CreateCourse />}
+			{!shouldShowCreateCourse && (
+				<>
+					<div className='coursesControlsWrapper'>
+						<SearchBar onClick={handleClickSearch} />
+						<Button
+							buttonName={BUTTON_NAMES.addCourse}
+							onClick={() => setShouldShowCreateCourse(!shouldShowCreateCourse)}
+						/>
+					</div>
+
+					{filteredCoursesList.map(
+						({ id, title, description, creationDate, duration, authors }) => (
+							<CourseCard
+								key={id}
+								title={title}
+								description={description}
+								creationDate={creationDate}
+								duration={duration}
+								authors={authors}
+								authorsList={authorsList}
+							/>
+						)
+					)}
+				</>
 			)}
 		</div>
 	);
