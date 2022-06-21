@@ -8,7 +8,6 @@ export const Input = ({
 	onChange,
 	...restProps
 }) => {
-	console.log(restProps);
 	return (
 		<label className='customInput'>
 			<input
