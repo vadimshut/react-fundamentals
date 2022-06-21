@@ -35,7 +35,7 @@ export const CourseCard = ({
 				</div>
 				<div className='duration'>
 					<b>Duration: </b>
-					<span>{courseDuration}</span>
+					<span>{`${courseDuration} hours`}</span>
 				</div>
 				<div className='created'>
 					<b>Created: </b>

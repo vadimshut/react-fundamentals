@@ -6,7 +6,7 @@ export const DescriptionInput = ({ labelName, onChange }) => {
 	return (
 		<label className='descriptionTextArea row2'>
 			{labelName && <div>{labelName}</div>}
-			<textarea className='textarea' onChange={onChange} />
+			<textarea className='textarea' onChange={onChange} required />
 		</label>
 	);
 };

@@ -7,5 +7,5 @@ export const getCourseDuration = (duration) => {
 	hours < 10 ? timeList.push(`0${hours}`) : timeList.push(`${hours}`);
 	minutes < 10 ? timeList.push(`0${minutes}`) : timeList.push(`${minutes}`);
 
-	return `${timeList.join(':')} hours`;
+	return timeList.join(':');
 };

@@ -21,6 +21,7 @@ export const Input = ({
 				placeholder={placeholder}
 				maxLength={maxLength}
 				onChange={onChange}
+				{...restProps}
 			/>
 		</label>
 	);

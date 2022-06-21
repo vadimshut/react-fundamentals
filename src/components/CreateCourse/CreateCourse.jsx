@@ -7,6 +7,7 @@ import { DescriptionInput } from './components/DescriptionInput/DescriptionInput
 
 import './create-course.scss';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
+import { AddDuration } from './components/AddDuration/AddDuration';
 
 const ModalBackground = styled.div`
 	position: absolute;
@@ -20,10 +21,9 @@ const ModalBackground = styled.div`
 `;
 
 const ModalBody = styled.div`
-	width: 100%;
 	background-color: white;
-	//margin: 10% auto;
-	//padding: 20px;
+	margin: 1rem;
+	padding: 1rem;
 `;
 
 export const CreateCourse = ({ children }) => {
@@ -55,7 +55,9 @@ export const CreateCourse = ({ children }) => {
 								<AddAuthor />
 							</div>
 							<div className='selectAuthors'></div>
-							<div className='enterDuration'></div>
+							<div className='enterDuration'>
+								<AddDuration />
+							</div>
 							<div className='availableCourseAuthors'></div>
 						</div>
 					</ModalBody>
