@@ -3,6 +3,14 @@ export const BUTTON_NAMES = {
 	showCourse: 'Show course',
 	search: 'Search',
 	addCourse: 'Add new course',
+	createCourse: 'Create course',
+	createAuthor: 'Create author',
+};
+
+export const PLACEHOLDERS = {
+	search: 'Enter course name or id...',
+	courseTitle: 'Enter course title...',
+	createAuthorName: 'Enter author name...',
 };
 
 export const mockedCoursesList = [

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { BUTTON_NAMES } from '../../../../constants';
+import { BUTTON_NAMES, PLACEHOLDERS } from '../../../../constants';
 import { Button } from '../../../../common/Button/Button';
 import { Input } from '../../../../common/Input/Input';
 
@@ -15,7 +15,7 @@ export const SearchBar = ({ onClick }) => {
 
 	return (
 		<div className='search-bar'>
-			<Input placeholder='Enter course name or id...' onChange={handleChange} />
+			<Input placeholder={PLACEHOLDERS.search} onChange={handleChange} />
 			<Button buttonName={BUTTON_NAMES.search} onClick={handleClick} />
 		</div>
 	);

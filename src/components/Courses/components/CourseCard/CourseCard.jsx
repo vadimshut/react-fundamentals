@@ -2,10 +2,11 @@ import PropTypes, { shape } from 'prop-types';
 import { Button } from '../../../../common/Button/Button';
 import { BUTTON_NAMES } from '../../../../constants';
 
-import './course-card.scss';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 import { getAuthors } from '../../../../helpers/getAuthors';
+
+import './course-card.scss';
 
 export const CourseCard = ({
 	title,

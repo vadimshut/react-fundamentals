@@ -1,8 +1,8 @@
+import { BUTTON_NAMES } from '../../constants';
 import { Logo } from './components/Logo/Logo';
+import { Button } from '../../common/Button/Button';
 
 import './header.scss';
-import { Button } from '../../common/Button/Button';
-import { BUTTON_NAMES } from '../../constants';
 
 export const Header = () => {
 	return (
