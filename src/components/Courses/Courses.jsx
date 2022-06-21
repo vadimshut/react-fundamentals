@@ -1,11 +1,17 @@
 import PropTypes, { shape } from 'prop-types';
-import { CourseCard } from '../CourseCard/CourseCard';
-
+import { CourseCard } from './components/CourseCard/CourseCard';
+import { SearchBar } from './components/SearchBar/SearchBar';
 import './courses.scss';
+import { BUTTON_NAMES } from '../../constants';
+import { Button } from '../../common/Button/Button';
 
 export const Courses = ({ coursesList, authorsList }) => {
 	return (
 		<div className='courses'>
+			<div className='coursesControlsWrapper'>
+				<SearchBar />
+				<Button buttonName={BUTTON_NAMES.addCourse} />
+			</div>
 			{coursesList.map(
 				({ id, title, description, creationDate, duration, authors }) => (
 					<CourseCard

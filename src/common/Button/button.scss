@@ -1,16 +1,14 @@
 .button {
+  height: 40px;
   cursor: pointer;
-  line-height: 1.25;
   white-space: nowrap;
-  vertical-align: middle;
-  padding: 0.65625rem 1.5rem;
+  padding: 0 1.5rem;
   border: 2px solid transparent;
   border-radius: 0.25rem;
   box-shadow: none;
   color: #ffffff;
   font-size: 0.875rem;
   font-weight: 700;
-  text-transform: uppercase;
   letter-spacing: 0.016rem;
   background-color: #007ee5;
   transition: all 0.2s ease-in-out;

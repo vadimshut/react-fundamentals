@@ -1,6 +1,8 @@
 export const BUTTON_NAMES = {
 	logout: 'Logout',
 	showCourse: 'Show course',
+	search: 'Search',
+	addCourse: 'Add new course',
 };
 
 export const mockedCoursesList = [
