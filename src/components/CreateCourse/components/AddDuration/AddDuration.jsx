@@ -1,13 +1,16 @@
-import './add-duration.scss';
-import { Input } from '../../../../common/Input/Input';
-import { PLACEHOLDERS } from '../../../../constants';
-import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { useState } from 'react';
+
+import { PLACEHOLDERS } from '../../../../constants';
+
+import { Input } from '../../../../common/Input/Input';
+import { getCourseDuration } from '../../../../helpers/getCourseDuration';
+
+import './add-duration.scss';
 
 export const AddDuration = () => {
 	const [duration, setDuration] = useState('');
 
-	const handlechange = (e) => {
+	const handleChange = (e) => {
 		setDuration(e.target.value);
 	};
 
@@ -20,7 +23,7 @@ export const AddDuration = () => {
 				placeholder={PLACEHOLDERS.duration}
 				labelName='Duration: '
 				className='input'
-				onChange={handlechange}
+				onChange={handleChange}
 				min={0}
 			/>
 			<div className='transformedDuration'>

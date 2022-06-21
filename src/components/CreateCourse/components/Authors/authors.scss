@@ -1,0 +1,14 @@
+.authorsComponent {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+
+  .title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem
+  }
+}

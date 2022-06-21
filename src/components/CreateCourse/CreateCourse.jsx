@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+
+import { BUTTON_NAMES, mockedAuthorsList, PLACEHOLDERS } from '../../constants';
+
 import { Button } from '../../common/Button/Button';
-import { BUTTON_NAMES, PLACEHOLDERS } from '../../constants';
 import { Input } from '../../common/Input/Input';
 import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
-
-import './create-course.scss';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AddDuration } from './components/AddDuration/AddDuration';
+import { Authors } from './components/Authors/Authors';
+
+import './create-course.scss';
 
 const ModalBackground = styled.div`
 	position: absolute;
@@ -26,7 +29,7 @@ const ModalBody = styled.div`
 	padding: 1rem;
 `;
 
-export const CreateCourse = ({ children }) => {
+export const CreateCourse = () => {
 	const [shouldShow, setShouldShow] = useState(false);
 
 	return (
@@ -54,11 +57,22 @@ export const CreateCourse = ({ children }) => {
 							<div className='addNewAuthor'>
 								<AddAuthor />
 							</div>
-							<div className='selectAuthors'></div>
+							<div className='selectAuthors'>
+								<Authors
+									authorsList={mockedAuthorsList}
+									authorsTitle='Authors'
+								/>
+							</div>
 							<div className='enterDuration'>
 								<AddDuration />
 							</div>
-							<div className='availableCourseAuthors'></div>
+							<div className='availableCourseAuthors'>
+								<Authors
+									authorsList={mockedAuthorsList}
+									authorsTitle='Course author'
+									buttonAction='delete'
+								/>
+							</div>
 						</div>
 					</ModalBody>
 				</ModalBackground>

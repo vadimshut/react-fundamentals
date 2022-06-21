@@ -10,7 +10,7 @@ const BUTTON_NAME = {
 };
 export const AuthorItem = ({ authorName, action }) => {
 	return (
-		<div>
+		<div className='authorItemComponent'>
 			<div>{authorName}</div>
 			<Button buttonName={BUTTON_NAME[action === 'add']} />
 		</div>

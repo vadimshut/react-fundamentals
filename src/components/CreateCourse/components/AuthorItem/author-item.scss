@@ -1,0 +1,8 @@
+.authorItemComponent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &>div {
+    font-size: 1rem;
+  }
+}
