@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import './input.scss';
 
@@ -8,10 +9,11 @@ export const Input = ({
 	labelName,
 	maxLength,
 	onChange,
+	className,
 	...restProps
 }) => {
 	return (
-		<label className='customInput'>
+		<label className={classnames('customInput', className)}>
 			{labelName && <div>{labelName}</div>}
 			<input
 				type={type}
@@ -29,6 +31,7 @@ Input.propTypes = {
 	labelName: PropTypes.string,
 	maxLength: PropTypes.number,
 	onChange: PropTypes.func,
+	className: PropTypes.string,
 };
 Input.defaultProps = {
 	type: 'text',
@@ -36,4 +39,5 @@ Input.defaultProps = {
 	labelName: null,
 	maxLength: 30,
 	onChange: null,
+	className: null,
 };

@@ -7,11 +7,12 @@ import './add-author.scss';
 
 export const AddAuthor = () => {
 	return (
-		<div>
-			<div>Add author</div>
+		<div className='addAuthorComponent'>
+			<div className='title'>Add author</div>
 			<Input
 				placeholder={PLACEHOLDERS.createAuthorName}
 				labelName='Author name: '
+				className='input'
 			/>
 			<Button buttonName={BUTTON_NAMES.createAuthor} />
 		</div>
