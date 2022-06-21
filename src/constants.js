@@ -5,6 +5,8 @@ export const BUTTON_NAMES = {
 	addCourse: 'Add new course',
 	createCourse: 'Create course',
 	createAuthor: 'Create author',
+	addAuthor: 'Add author',
+	deleteAuthor: 'Delete author',
 };
 
 export const PLACEHOLDERS = {
