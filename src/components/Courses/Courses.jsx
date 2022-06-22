@@ -12,6 +12,7 @@ import { Button } from '../../common/Button/Button';
 export const Courses = ({ coursesList, authorsList }) => {
 	const [filteredCoursesList, setFilteredCoursesList] = useState(coursesList);
 	const [shouldShowCreateCourse, setShouldShowCreateCourse] = useState(false);
+	const [authors, setAuthors] = useState(authorsList);
 
 	const handleClickSearch = (searchValue) => {
 		const filteredCourses = coursesList.filter(
@@ -24,7 +25,9 @@ export const Courses = ({ coursesList, authorsList }) => {
 
 	return (
 		<div className='courses'>
-			{shouldShowCreateCourse && <CreateCourse />}
+			{shouldShowCreateCourse && (
+				<CreateCourse coursesList={coursesList} authorsList={authors} />
+			)}
 			{!shouldShowCreateCourse && (
 				<>
 					<div className='coursesControlsWrapper'>

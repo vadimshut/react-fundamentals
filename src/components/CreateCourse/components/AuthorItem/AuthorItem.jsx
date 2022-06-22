@@ -8,21 +8,33 @@ const BUTTON_NAME = {
 	true: BUTTON_NAMES.addAuthor,
 	false: BUTTON_NAMES.deleteAuthor,
 };
-export const AuthorItem = ({ authorName, action }) => {
+export const AuthorItem = ({ author, action, onClick }) => {
+	const handleClick = () => {
+		onClick({ ...author, action });
+	};
 	return (
 		<div className='authorItemComponent'>
-			<div>{authorName}</div>
-			<Button buttonName={BUTTON_NAME[action === 'add']} />
+			<div>{author.name}</div>
+			<Button
+				buttonName={BUTTON_NAME[action === 'add']}
+				onClick={handleClick}
+			/>
 		</div>
 	);
 };
 
 AuthorItem.propTypes = {
-	authorName: PropTypes.string,
+	author: PropTypes.shape({
+		id: PropTypes.string,
+		name: PropTypes.string,
+	}),
+	id: PropTypes.string,
 	action: PropTypes.oneOf(['add', 'delete']),
+	onClick: PropTypes.func.isRequired,
 };
 
 AuthorItem.defaultProps = {
-	authorName: null,
+	author: null,
+	id: null,
 	action: 'add',
 };

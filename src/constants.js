@@ -13,7 +13,7 @@ export const PLACEHOLDERS = {
 	search: 'Enter course name or id...',
 	courseTitle: 'Enter course title...',
 	createAuthorName: 'Enter author name...',
-	duration: 'Duration',
+	duration: 'Enter duration in minutes...',
 };
 
 export const mockedCoursesList = [
