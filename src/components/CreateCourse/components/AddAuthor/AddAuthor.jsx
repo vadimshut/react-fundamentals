@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import PropTypes, { shape } from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { BUTTON_NAMES, PLACEHOLDERS } from '../../../../constants';
 
 import { Input } from '../../../../common/Input/Input';
@@ -5,7 +8,22 @@ import { Button } from '../../../../common/Button/Button';
 
 import './add-author.scss';
 
-export const AddAuthor = () => {
+export const AddAuthor = ({ onClick }) => {
+	const [name, setName] = useState('');
+	const [isError, setIsError] = useState(false);
+
+	const handleChange = (e) => {
+		setName(e.target.value);
+	};
+
+	const handleClick = () => {
+		if (name.trim().length < 3) setIsError(!isError);
+		if (isError) setIsError(!isError);
+		const id = uuidv4();
+		onClick({ id, name });
+		setName('');
+	};
+
 	return (
 		<div className='addAuthorComponent'>
 			<div className='title'>Add author</div>
@@ -13,8 +31,15 @@ export const AddAuthor = () => {
 				placeholder={PLACEHOLDERS.createAuthorName}
 				labelName='Author name: '
 				className='input'
+				onChange={handleChange}
+				value={name}
+				isError={isError}
 			/>
-			<Button buttonName={BUTTON_NAMES.createAuthor} />
+			<Button buttonName={BUTTON_NAMES.createAuthor} onClick={handleClick} />
 		</div>
 	);
+};
+
+AddAuthor.propTypes = {
+	onClick: PropTypes.func.isRequired,
 };

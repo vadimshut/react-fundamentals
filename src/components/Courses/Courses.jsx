@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
+import { BUTTON_NAMES } from '../../constants';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { CreateCourse } from '../CreateCourse/CreateCourse';
+import { Button } from '../../common/Button/Button';
 
 import './courses.scss';
-import { BUTTON_NAMES } from '../../constants';
-import { Button } from '../../common/Button/Button';
 
 export const Courses = ({ coursesList, authorsList }) => {
 	const [filteredCoursesList, setFilteredCoursesList] = useState(coursesList);

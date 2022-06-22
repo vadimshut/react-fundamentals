@@ -14,6 +14,7 @@ import './create-course.scss';
 export const CreateCourse = ({ coursesList, authorsList }) => {
 	const [authors, setAuthors] = useState(authorsList);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
+	const [title, setTitle] = useState('');
 
 	const handleAddRemoveAuthor = ({ id, name, action }) => {
 		if (action === 'add') {
@@ -29,10 +30,23 @@ export const CreateCourse = ({ coursesList, authorsList }) => {
 		setAuthors([...authors, { id, name }]);
 	};
 
+	const createNewAuthor = (newAuthor) => {
+		setAuthors([...authors, newAuthor]);
+	};
+
+	const handleChangeTitle = (e) => {
+		setTitle(e.target.value);
+	};
+
 	return (
 		<div className='container'>
 			<div className='titleNewCourse'>
-				<Input placeholder={PLACEHOLDERS.courseTitle} labelName='Title: ' />
+				<Input
+					placeholder={PLACEHOLDERS.courseTitle}
+					labelName='Title: '
+					onChange={handleChangeTitle}
+					value={title}
+				/>
 			</div>
 			<div className='buttonCreateCourse'>
 				<Button buttonName={BUTTON_NAMES.createCourse} />
@@ -41,7 +55,7 @@ export const CreateCourse = ({ coursesList, authorsList }) => {
 				<DescriptionInput labelName='Description' />
 			</div>
 			<div className='addNewAuthor'>
-				<AddAuthor />
+				<AddAuthor onClick={createNewAuthor} />
 			</div>
 			<div className='selectAuthors'>
 				<Authors

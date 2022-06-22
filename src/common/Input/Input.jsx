@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import './input.scss';
+import { Error } from '../Error/Error';
 
 export const Input = ({
 	type,
@@ -10,15 +11,25 @@ export const Input = ({
 	maxLength,
 	onChange,
 	className,
+	isError,
+	value,
 	...restProps
 }) => {
 	return (
 		<label className={classnames('customInput', className)}>
-			{labelName && <div>{labelName}</div>}
+			{labelName && (
+				<div>
+					{labelName}{' '}
+					{isError && (
+						<Error erorDescription='Author name should be more than 2 characters' />
+					)}
+				</div>
+			)}
 			<input
 				type={type}
 				className='input'
 				placeholder={placeholder}
+				value={value}
 				maxLength={maxLength}
 				onChange={onChange}
 				{...restProps}
@@ -33,6 +44,7 @@ Input.propTypes = {
 	maxLength: PropTypes.number,
 	onChange: PropTypes.func,
 	className: PropTypes.string,
+	value: PropTypes.string,
 };
 Input.defaultProps = {
 	type: 'text',
@@ -41,4 +53,5 @@ Input.defaultProps = {
 	maxLength: 30,
 	onChange: null,
 	className: null,
+	value: '',
 };
