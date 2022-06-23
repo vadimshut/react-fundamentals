@@ -12,6 +12,7 @@ export const Input = ({
 	onChange,
 	className,
 	isError,
+	errorMessage,
 	value,
 	...restProps
 }) => {
@@ -19,10 +20,7 @@ export const Input = ({
 		<label className={classnames('customInput', className)}>
 			{labelName && (
 				<div>
-					{labelName}{' '}
-					{isError && (
-						<Error erorDescription='Author name should be more than 2 characters' />
-					)}
+					{labelName} {isError && <Error erorDescription={errorMessage} />}
 				</div>
 			)}
 			<input
@@ -45,6 +43,8 @@ Input.propTypes = {
 	onChange: PropTypes.func,
 	className: PropTypes.string,
 	value: PropTypes.string,
+	isError: PropTypes.bool,
+	errorMessage: PropTypes.string,
 };
 Input.defaultProps = {
 	type: 'text',
@@ -54,4 +54,6 @@ Input.defaultProps = {
 	onChange: null,
 	className: null,
 	value: '',
+	isError: false,
+	errorMessage: '',
 };

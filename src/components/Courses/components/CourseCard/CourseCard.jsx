@@ -13,12 +13,12 @@ export const CourseCard = ({
 	description,
 	creationDate,
 	duration,
-	authors,
+	authorsIdsList,
 	authorsList,
 }) => {
 	const courseDuration = getCourseDuration(duration);
 	const courseCreationDate = formatCreationDate(creationDate);
-	const authorsToString = getAuthors(authors, authorsList);
+	const authorsToString = getAuthors(authorsIdsList, authorsList);
 
 	return (
 		<div className='CourseCard'>
@@ -54,7 +54,7 @@ CourseCard.propTypes = {
 	description: PropTypes.string,
 	creationDate: PropTypes.string,
 	duration: PropTypes.number,
-	authors: PropTypes.arrayOf(PropTypes.string),
+	authorsIdsList: PropTypes.arrayOf(PropTypes.string),
 	authorsList: PropTypes.arrayOf(
 		shape({
 			id: PropTypes.string,
@@ -68,6 +68,6 @@ CourseCard.defaultProps = {
 	description: null,
 	creationDate: null,
 	duration: null,
-	authors: null,
+	authorsIdsList: [],
 	authorsList: [],
 };

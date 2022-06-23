@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
-import { BUTTON_NAMES, PLACEHOLDERS } from '../../constants';
+import { v4 as uuidv4 } from 'uuid';
+import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
 
 import { Button } from '../../common/Button/Button';
 import { Input } from '../../common/Input/Input';
@@ -10,11 +11,15 @@ import { AddDuration } from './components/AddDuration/AddDuration';
 import { Authors } from './components/Authors/Authors';
 
 import './create-course.scss';
+import { getDate } from '../../helpers/getDate';
 
-export const CreateCourse = ({ coursesList, authorsList }) => {
+export const CreateCourse = ({ authorsList, createNewCourse }) => {
+	const [error, setError] = useState(false);
 	const [authors, setAuthors] = useState(authorsList);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
 	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const [duration, setDuration] = useState('');
 
 	const handleAddRemoveAuthor = ({ id, name, action }) => {
 		if (action === 'add') {
@@ -38,21 +43,75 @@ export const CreateCourse = ({ coursesList, authorsList }) => {
 		setTitle(e.target.value);
 	};
 
+	const handleChangeDuration = (e) => {
+		setDuration(e.target.value);
+	};
+
+	const handleChangeDescription = (e) => {
+		setDescription(e.target.value);
+	};
+
+	const isValidated = () => {
+		if (
+			!title ||
+			title.length < 2 ||
+			!description ||
+			description.length < 2 ||
+			!+duration ||
+			!selectedAuthors.length
+		)
+			return false;
+		return true;
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (!isValidated()) {
+			setError(true);
+			alert(ERROR_MESSAGES.globalAlert);
+			return;
+		}
+
+		const newAuthorsIds = selectedAuthors.map(({ id }) => id);
+		const id = uuidv4();
+		const creationDate = getDate();
+
+		const newCourse = {
+			id,
+			title,
+			description,
+			creationDate,
+			duration: +duration,
+			authors: newAuthorsIds,
+		};
+
+		createNewCourse(newCourse, selectedAuthors);
+	};
+
 	return (
-		<div className='container'>
+		<form className='container' id='formId' onSubmit={handleSubmit}>
 			<div className='titleNewCourse'>
 				<Input
 					placeholder={PLACEHOLDERS.courseTitle}
 					labelName='Title: '
 					onChange={handleChangeTitle}
 					value={title}
+					isError={error && (!title || title.length < 2)}
+					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
 				/>
 			</div>
 			<div className='buttonCreateCourse'>
-				<Button buttonName={BUTTON_NAMES.createCourse} />
+				<Button buttonName={BUTTON_NAMES.createCourse} form='formId' />
 			</div>
 			<div className='descriptionNewCourse'>
-				<DescriptionInput labelName='Description' />
+				<DescriptionInput
+					labelName='Description: '
+					value={description}
+					onChange={handleChangeDescription}
+					isError={error && (!description || description.length < 2)}
+					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
+				/>
 			</div>
 			<div className='addNewAuthor'>
 				<AddAuthor onClick={createNewAuthor} />
@@ -65,7 +124,12 @@ export const CreateCourse = ({ coursesList, authorsList }) => {
 				/>
 			</div>
 			<div className='enterDuration'>
-				<AddDuration />
+				<AddDuration
+					onChange={handleChangeDuration}
+					duration={duration}
+					isError={error && !+duration}
+					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThanZero}`}
+				/>
 			</div>
 			<div className='availableCourseAuthors'>
 				<Authors
@@ -73,23 +137,16 @@ export const CreateCourse = ({ coursesList, authorsList }) => {
 					authorsTitle='Course author'
 					buttonAction='delete'
 					onClick={handleAddRemoveAuthor}
+					isError={error && !selectedAuthors.length}
+					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThanOneAuthor}`}
 				/>
 			</div>
-		</div>
+		</form>
 	);
 };
 
 CreateCourse.propTypes = {
-	coursesList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
+	createNewCourse: PropTypes.func,
 	authorsList: PropTypes.arrayOf(
 		shape({
 			id: PropTypes.string,
@@ -99,6 +156,6 @@ CreateCourse.propTypes = {
 };
 
 CreateCourse.defaultProps = {
-	coursesList: [],
+	createNewCourse: null,
 	authorsList: [],
 };

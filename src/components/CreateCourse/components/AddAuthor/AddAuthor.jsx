@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { BUTTON_NAMES, PLACEHOLDERS } from '../../../../constants';
+import {
+	BUTTON_NAMES,
+	ERROR_MESSAGES,
+	PLACEHOLDERS,
+} from '../../../../constants';
 
 import { Input } from '../../../../common/Input/Input';
 import { Button } from '../../../../common/Button/Button';
@@ -16,11 +20,15 @@ export const AddAuthor = ({ onClick }) => {
 		setName(e.target.value);
 	};
 
-	const handleClick = () => {
-		if (name.trim().length < 3) setIsError(!isError);
-		if (isError) setIsError(!isError);
+	const handleClick = (e) => {
+		e.preventDefault();
+		if (name.trim().length < 3) {
+			setIsError(true);
+			return;
+		}
 		const id = uuidv4();
 		onClick({ id, name });
+		setIsError(false);
 		setName('');
 	};
 
@@ -34,6 +42,7 @@ export const AddAuthor = ({ onClick }) => {
 				onChange={handleChange}
 				value={name}
 				isError={isError}
+				errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
 			/>
 			<Button buttonName={BUTTON_NAMES.createAuthor} onClick={handleClick} />
 		</div>

@@ -2,16 +2,20 @@ import PropTypes from 'prop-types';
 import { AuthorItem } from '../AuthorItem/AuthorItem';
 
 import './authors.scss';
+import { Error } from '../../../../common/Error/Error';
 
 export const Authors = ({
 	authorsList,
 	authorsTitle,
 	buttonAction,
 	onClick,
+	isError,
+	errorMessage,
 }) => {
 	return (
 		<div className='authorsComponent'>
 			<div className='title'>{authorsTitle}</div>
+			{isError && <Error erorDescription={errorMessage} />}
 			{authorsList.map(({ name, id }) => (
 				<AuthorItem
 					key={id}
@@ -29,6 +33,8 @@ Authors.propTypes = {
 	authorsTitle: PropTypes.string,
 	buttonAction: PropTypes.oneOf(['add', 'delete']),
 	onClick: PropTypes.func,
+	isError: PropTypes.bool,
+	errorMessage: PropTypes.string,
 };
 
 Authors.defaultProps = {
@@ -36,4 +42,6 @@ Authors.defaultProps = {
 	authorsTitle: null,
 	buttonAction: 'add',
 	onClick: null,
+	isError: false,
+	errorMessage: '',
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 import { BUTTON_NAMES } from '../../constants';
 
@@ -10,22 +10,39 @@ import { Button } from '../../common/Button/Button';
 import './courses.scss';
 
 export const Courses = ({ coursesList, authorsList }) => {
-	const [filteredCoursesList, setFilteredCoursesList] = useState(coursesList);
+	const [courses, setCourses] = useState(coursesList);
+	const [filteredCourses, setFilteredCourses] = useState([]);
+	const [authors, setAuthors] = useState(authorsList);
 	const [shouldShowCreateCourse, setShouldShowCreateCourse] = useState(false);
 
+	useEffect(() => {
+		setFilteredCourses(courses);
+	}, [courses]);
+
 	const handleClickSearch = (searchValue) => {
-		const filteredCourses = coursesList.filter(
+		const showCourses = courses.filter(
 			({ title, id }) =>
 				title.toLowerCase().includes(searchValue.toLowerCase()) ||
 				id.toLowerCase().includes(searchValue.toLowerCase())
 		);
-		setFilteredCoursesList(filteredCourses);
+		setFilteredCourses(showCourses);
+	};
+
+	const updateAuthors = (oldAuthors, newAuthors) => {
+		const oldAuthorsIds = oldAuthors.map(({ id }) => id);
+		return newAuthors.filter(({ id }) => !oldAuthorsIds.includes(id));
+	};
+	const createNewCourse = (newCourse, newAuthors) => {
+		const newPersonToAuthors = updateAuthors(authors, newAuthors);
+		setCourses([...courses, newCourse]);
+		setAuthors([...authors, ...newPersonToAuthors]);
+		setShouldShowCreateCourse(!shouldShowCreateCourse);
 	};
 
 	return (
 		<div className='courses'>
 			{shouldShowCreateCourse && (
-				<CreateCourse coursesList={coursesList} authorsList={authorsList} />
+				<CreateCourse authorsList={authors} createNewCourse={createNewCourse} />
 			)}
 			{!shouldShowCreateCourse && (
 				<>
@@ -37,16 +54,23 @@ export const Courses = ({ coursesList, authorsList }) => {
 						/>
 					</div>
 
-					{filteredCoursesList.map(
-						({ id, title, description, creationDate, duration, authors }) => (
+					{filteredCourses.map(
+						({
+							id,
+							title,
+							description,
+							creationDate,
+							duration,
+							authors: authorsIdsList,
+						}) => (
 							<CourseCard
 								key={id}
 								title={title}
 								description={description}
 								creationDate={creationDate}
 								duration={duration}
-								authors={authors}
-								authorsList={authorsList}
+								authorsIdsList={authorsIdsList}
+								authorsList={authors}
 							/>
 						)
 					)}
