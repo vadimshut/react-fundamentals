@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes, { shape } from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
@@ -12,6 +13,7 @@ import { Authors } from './components/Authors/Authors';
 
 import './create-course.scss';
 import { getDate } from '../../helpers/getDate';
+import { PageDecorator } from '../../common/Decorator/PageDecorator';
 
 export const CreateCourse = ({ authorsList, createNewCourse }) => {
 	const [error, setError] = useState(false);
@@ -20,6 +22,8 @@ export const CreateCourse = ({ authorsList, createNewCourse }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState('');
+
+	const navigate = useNavigate();
 
 	const handleAddRemoveAuthor = useCallback(
 		({ id, name, action }) => {
@@ -96,61 +100,65 @@ export const CreateCourse = ({ authorsList, createNewCourse }) => {
 		};
 
 		createNewCourse(newCourse, selectedAuthors);
+		navigate('/courses', { replace: true });
+		console.log('create');
 	};
 
 	return (
-		<form className='container' id='formId' onSubmit={handleSubmit}>
-			<div className='titleNewCourse'>
-				<Input
-					placeholder={PLACEHOLDERS.courseTitle}
-					labelName='Title: '
-					onChange={handleChangeTitle}
-					value={title}
-					isError={error && (!title || title.length < 2)}
-					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
-				/>
-			</div>
-			<div className='buttonCreateCourse'>
-				<Button buttonName={BUTTON_NAMES.createCourse} form='formId' />
-			</div>
-			<div className='descriptionNewCourse'>
-				<DescriptionInput
-					labelName='Description: '
-					value={description}
-					onChange={handleChangeDescription}
-					isError={error && (!description || description.length < 2)}
-					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
-				/>
-			</div>
-			<div className='addNewAuthor'>
-				<AddAuthor onClick={createNewAuthor} />
-			</div>
-			<div className='selectAuthors'>
-				<Authors
-					authorsList={authors}
-					authorsTitle='Authors'
-					onClick={handleAddRemoveAuthor}
-				/>
-			</div>
-			<div className='enterDuration'>
-				<AddDuration
-					onChange={handleChangeDuration}
-					duration={duration}
-					isError={error && !+duration}
-					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThanZero}`}
-				/>
-			</div>
-			<div className='availableCourseAuthors'>
-				<Authors
-					authorsList={selectedAuthors}
-					authorsTitle='Course author'
-					buttonAction='delete'
-					onClick={handleAddRemoveAuthor}
-					isError={error && !selectedAuthors.length}
-					errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThanOneAuthor}`}
-				/>
-			</div>
-		</form>
+		<PageDecorator>
+			<form className='container' id='formId' onSubmit={handleSubmit}>
+				<div className='titleNewCourse'>
+					<Input
+						placeholder={PLACEHOLDERS.courseTitle}
+						labelName='Title: '
+						onChange={handleChangeTitle}
+						value={title}
+						isError={error && (!title || title.length < 2)}
+						errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
+					/>
+				</div>
+				<div className='buttonCreateCourse'>
+					<Button buttonName={BUTTON_NAMES.createCourse} form='formId' />
+				</div>
+				<div className='descriptionNewCourse'>
+					<DescriptionInput
+						labelName='Description: '
+						value={description}
+						onChange={handleChangeDescription}
+						isError={error && (!description || description.length < 2)}
+						errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThan}`}
+					/>
+				</div>
+				<div className='addNewAuthor'>
+					<AddAuthor onClick={createNewAuthor} />
+				</div>
+				<div className='selectAuthors'>
+					<Authors
+						authorsList={authors}
+						authorsTitle='Authors'
+						onClick={handleAddRemoveAuthor}
+					/>
+				</div>
+				<div className='enterDuration'>
+					<AddDuration
+						onChange={handleChangeDuration}
+						duration={duration}
+						isError={error && !+duration}
+						errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThanZero}`}
+					/>
+				</div>
+				<div className='availableCourseAuthors'>
+					<Authors
+						authorsList={selectedAuthors}
+						authorsTitle='Course author'
+						buttonAction='delete'
+						onClick={handleAddRemoveAuthor}
+						isError={error && !selectedAuthors.length}
+						errorMessage={`${ERROR_MESSAGES.notEmpty} ${ERROR_MESSAGES.moreThanOneAuthor}`}
+					/>
+				</div>
+			</form>
+		</PageDecorator>
 	);
 };
 
