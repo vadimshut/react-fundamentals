@@ -1,0 +1,38 @@
+.container {
+  display: grid;
+
+  grid-gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "titleNewCourse buttonCreateCourse"
+    "descriptionNewCourse descriptionNewCourse"
+    "addNewAuthor selectAuthors"
+    "enterDuration availableCourseAuthors";
+
+  .titleNewCourse {
+    grid-area: titleNewCourse;
+  }
+  .buttonCreateCourse {
+    grid-area: buttonCreateCourse;
+    align-self: end;
+    justify-self: end;
+
+  }
+  .descriptionNewCourse {
+    grid-area: descriptionNewCourse;
+  }
+  .addNewAuthor {
+    grid-area: addNewAuthor;
+  }
+  .selectAuthors {
+    grid-area: selectAuthors;
+  }
+  .enterDuration {
+    grid-area: enterDuration;
+  }
+  .availableCourseAuthors {
+    grid-area: availableCourseAuthors;
+  }
+
+}

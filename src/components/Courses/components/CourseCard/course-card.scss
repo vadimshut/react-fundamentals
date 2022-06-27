@@ -1,0 +1,42 @@
+.CourseCard {
+  display: flex;
+  column-gap: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 4px 3px rgba(0,0,0,0.32);
+  border-radius: 0.25rem;
+
+  .title{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .leftContainer {
+    width: 65%;
+  }
+
+  .rightContainer {
+    width: 35%;
+    margin-top: 1rem;
+
+    .authors,
+    .duration {
+      margin-bottom: 0.3rem;
+    }
+
+    .authors {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .created {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .buttonWrapper{
+    display: flex;
+    justify-content: center;
+  }
+}

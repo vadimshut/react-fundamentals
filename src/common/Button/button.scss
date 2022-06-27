@@ -1,0 +1,37 @@
+.button {
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.016rem;
+  background-color: #007ee5;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #0068bc;
+    border-color: #0068bc;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(0, 126, 229, 0.25);
+  }
+
+  &:active {
+    color: #ffffff;
+    background-color: #0068bc;
+    border-color: #0068bc;
+    background-image: none;
+    box-shadow: none;
+  }
+
+}

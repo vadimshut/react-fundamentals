@@ -1,0 +1,10 @@
+.courses {
+  flex: 1 0 auto;
+  position: relative;
+  padding: 1rem 2rem;
+
+  .coursesControlsWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
