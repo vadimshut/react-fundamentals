@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
@@ -21,35 +21,44 @@ export const CreateCourse = ({ authorsList, createNewCourse }) => {
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState('');
 
-	const handleAddRemoveAuthor = ({ id, name, action }) => {
-		if (action === 'add') {
-			const updatedStateAuthors = authors.filter((author) => author.id !== id);
-			setAuthors(updatedStateAuthors);
-			setSelectedAuthors([...selectedAuthors, { id, name }]);
-			return;
-		}
-		const updatedStateSelectedAuthors = selectedAuthors.filter(
-			(selectedAuthor) => selectedAuthor.id !== id
-		);
-		setSelectedAuthors(updatedStateSelectedAuthors);
-		setAuthors([...authors, { id, name }]);
-	};
+	const handleAddRemoveAuthor = useCallback(
+		({ id, name, action }) => {
+			if (action === 'add') {
+				const updatedStateAuthors = authors.filter(
+					(author) => author.id !== id
+				);
+				setAuthors(updatedStateAuthors);
+				setSelectedAuthors([...selectedAuthors, { id, name }]);
+				return;
+			}
+			const updatedStateSelectedAuthors = selectedAuthors.filter(
+				(selectedAuthor) => selectedAuthor.id !== id
+			);
 
-	const createNewAuthor = (newAuthor) => {
-		setAuthors([...authors, newAuthor]);
-	};
+			setSelectedAuthors(updatedStateSelectedAuthors);
+			setAuthors([...authors, { id, name }]);
+		},
+		[authors, selectedAuthors]
+	);
 
-	const handleChangeTitle = (e) => {
+	const createNewAuthor = useCallback(
+		(newAuthor) => {
+			setAuthors([...authors, newAuthor]);
+		},
+		[authors]
+	);
+
+	const handleChangeTitle = useCallback((e) => {
 		setTitle(e.target.value);
-	};
+	}, []);
 
-	const handleChangeDuration = (e) => {
+	const handleChangeDuration = useCallback((e) => {
 		setDuration(e.target.value);
-	};
+	}, []);
 
-	const handleChangeDescription = (e) => {
+	const handleChangeDescription = useCallback((e) => {
 		setDescription(e.target.value);
-	};
+	}, []);
 
 	const isValidated = () => {
 		if (

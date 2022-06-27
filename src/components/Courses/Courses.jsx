@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 import { BUTTON_NAMES } from '../../constants';
 
+import { updateAuthors } from '../../helpers/updateAuthors';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { CreateCourse } from '../CreateCourse/CreateCourse';
@@ -15,29 +16,31 @@ export const Courses = ({ coursesList, authorsList }) => {
 	const [authors, setAuthors] = useState(authorsList);
 	const [shouldShowCreateCourse, setShouldShowCreateCourse] = useState(false);
 
-	useEffect(() => {
+	useMemo(() => {
 		setFilteredCourses(courses);
 	}, [courses]);
 
-	const handleClickSearch = (searchValue) => {
-		const showCourses = courses.filter(
-			({ title, id }) =>
-				title.toLowerCase().includes(searchValue.toLowerCase()) ||
-				id.toLowerCase().includes(searchValue.toLowerCase())
-		);
-		setFilteredCourses(showCourses);
-	};
+	const handleClickSearch = useCallback(
+		(searchValue) => {
+			const showCourses = courses.filter(
+				({ title, id }) =>
+					title.toLowerCase().includes(searchValue.toLowerCase()) ||
+					id.toLowerCase().includes(searchValue.toLowerCase())
+			);
+			setFilteredCourses(showCourses);
+		},
+		[courses]
+	);
 
-	const updateAuthors = (oldAuthors, newAuthors) => {
-		const oldAuthorsIds = oldAuthors.map(({ id }) => id);
-		return newAuthors.filter(({ id }) => !oldAuthorsIds.includes(id));
-	};
-	const createNewCourse = (newCourse, newAuthors) => {
-		const newPersonToAuthors = updateAuthors(authors, newAuthors);
-		setCourses([...courses, newCourse]);
-		setAuthors([...authors, ...newPersonToAuthors]);
-		setShouldShowCreateCourse(!shouldShowCreateCourse);
-	};
+	const createNewCourse = useCallback(
+		(newCourse, newAuthors) => {
+			const newPersonToAuthors = updateAuthors(authors, newAuthors);
+			setCourses([...courses, newCourse]);
+			setAuthors([...authors, ...newPersonToAuthors]);
+			setShouldShowCreateCourse(!shouldShowCreateCourse);
+		},
+		[authors, courses, shouldShowCreateCourse]
+	);
 
 	return (
 		<div className='courses'>
