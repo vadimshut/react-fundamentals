@@ -24,6 +24,15 @@ export const PLACEHOLDERS = {
 	duration: 'Enter duration in minutes...',
 };
 
+export const USE_REDUCER_TYPES = {
+	SET_ERROR: 'setError',
+	RESET_ERROR: 'resetError',
+	SET_NAME: 'setName',
+	SET_EMAIL: 'setEmail',
+	SET_PASSWORD: 'setPassword',
+	RESET_FORM: 'resetForm',
+};
+
 export const mockedCoursesList = [
 	{
 		id: 'de5aaa59-90f5-4dbc-b8a9-aaf205c551ba',
