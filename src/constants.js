@@ -33,6 +33,16 @@ export const USE_REDUCER_TYPES = {
 	RESET_FORM: 'resetForm',
 };
 
+export const ENDPOINTS = {
+	LOGIN: 'login',
+	REGISTRATION: 'register',
+};
+
+export const REQUEST_METHODS = {
+	GET: 'GET',
+	POST: 'POST',
+};
+
 export const mockedCoursesList = [
 	{
 		id: 'de5aaa59-90f5-4dbc-b8a9-aaf205c551ba',

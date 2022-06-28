@@ -9,6 +9,7 @@ import { Courses } from './components/Courses/Courses';
 import { CreateCourse } from './components/CreateCourse/CreateCourse';
 
 import { updateAuthors } from './helpers/updateAuthors';
+import { RequireAuth } from './helpers/RequireAuth';
 
 function App() {
 	const [courses, setCourses] = useState(mockedCoursesList);
@@ -26,11 +27,16 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
+				<Route path='/' element={<Navigate to='/courses' />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/registration' element={<Registration />} />
 				<Route
 					path='/courses'
-					element={<Courses coursesList={courses} authorsList={authors} />}
+					element={
+						<RequireAuth>
+							<Courses coursesList={courses} authorsList={authors} />
+						</RequireAuth>
+					}
 				/>
 				{/*<Route path='/courses/:courseId' element={<App />} />*/}
 				<Route

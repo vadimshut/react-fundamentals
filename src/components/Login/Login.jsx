@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from 'react';
 
 import { initialState, reducer, init } from '../../helpers/reactReducer';
-import { USE_REDUCER_TYPES } from '../../constants';
+import { ENDPOINTS, REQUEST_METHODS, USE_REDUCER_TYPES } from '../../constants';
 import { createBody } from '../../helpers/createBody';
 import { Fetch } from '../../helpers/fetch';
 
@@ -28,7 +28,7 @@ export const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const body = createBody({ email, password });
-		const response = await Fetch('login', 'POST', body);
+		const response = await Fetch(ENDPOINTS.LOGIN, REQUEST_METHODS.POST, body);
 		if (response.ok) {
 			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
 			// 	navigate('/login', { replace: true });

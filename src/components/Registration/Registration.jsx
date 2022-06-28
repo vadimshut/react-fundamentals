@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
 
-import { USE_REDUCER_TYPES } from '../../constants';
+import { ENDPOINTS, REQUEST_METHODS, USE_REDUCER_TYPES } from '../../constants';
 import { Fetch } from '../../helpers/fetch';
 import { createBody } from '../../helpers/createBody';
 
@@ -34,7 +34,11 @@ export const Registration = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const body = createBody({ name, email, password });
-		const response = await Fetch('register', 'POST', body);
+		const response = await Fetch(
+			ENDPOINTS.REGISTRATION,
+			REQUEST_METHODS.POST,
+			body
+		);
 		if (response.ok) {
 			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
 			navigate('/login', { replace: true });
