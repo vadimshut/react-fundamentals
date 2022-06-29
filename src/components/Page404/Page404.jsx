@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../constants';
 
 import './page404.scss';
 
-export const Page404 = () => {
+const Page404UI = () => {
 	return (
 		<div className='notFound'>
 			<div className='notFound__wrapper'>
@@ -23,3 +24,5 @@ export const Page404 = () => {
 		</div>
 	);
 };
+
+export const Page404 = memo(Page404UI);
