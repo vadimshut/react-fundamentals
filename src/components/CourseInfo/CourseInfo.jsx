@@ -1,18 +1,20 @@
 import PropTypes, { shape } from 'prop-types';
-import { useParams } from 'react-router-dom';
-
-import { PageDecorator } from '../../common/Decorator/PageDecorator';
-import { findCourse } from '../../helpers/findCourse';
 import { useMemo } from 'react';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 
-import './courseInfo.scss';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
 import { getAuthorsNameList } from '../../helpers/getAuthors';
+import { checkExistCourse } from '../../helpers/checkExistCourse';
 
-export const CourseInfo = ({ coursesList, authorsList }) => {
-	const { courseId } = useParams();
+import { PageDecorator } from '../../common/Decorator/PageDecorator';
+import { findCourse } from '../../helpers/findCourse';
 
+import './courseInfo.scss';
+import { BackToCourses } from './components/BackToCourses/BackToCourses';
+import { ROUTES } from '../../constants';
+
+const CourseInfoUI = ({ coursesList, authorsList, courseId }) => {
 	const { id, title, description, creationDate, duration, authors } = useMemo(
 		() => findCourse(coursesList, courseId),
 		[coursesList, courseId]
@@ -23,6 +25,7 @@ export const CourseInfo = ({ coursesList, authorsList }) => {
 		() => formatCreationDate(creationDate),
 		[creationDate]
 	);
+
 	const authorsNameList = useMemo(
 		() => getAuthorsNameList(authors, authorsList),
 		[authors, authorsList]
@@ -31,6 +34,7 @@ export const CourseInfo = ({ coursesList, authorsList }) => {
 	return (
 		<PageDecorator>
 			<div className='courseInfo'>
+				<BackToCourses />
 				<h1 className='title'>{title}</h1>
 				<div className='content'>
 					<div className='leftContainer '>
@@ -64,7 +68,52 @@ export const CourseInfo = ({ coursesList, authorsList }) => {
 	);
 };
 
-CourseInfo.propTypes = {
+CourseInfoUI.propTypes = {
+	coursesList: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			title: PropTypes.string,
+			description: PropTypes.string,
+			creationDate: PropTypes.string,
+			duration: PropTypes.number,
+			authors: PropTypes.arrayOf(PropTypes.string),
+		})
+	),
+	authorsList: PropTypes.arrayOf(
+		shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
+	courseId: PropTypes.string,
+};
+
+CourseInfoUI.defaultProps = {
+	coursesList: [],
+	authorsList: [],
+	courseId: '',
+};
+
+const CourseInfoWrapper = (WrappedComponent) => {
+	const HOC = ({ coursesList, authorsList }) => {
+		const { courseId } = useParams();
+		let location = useLocation();
+		const isCourseExist = checkExistCourse(courseId, coursesList);
+		if (!courseId || !isCourseExist) {
+			return <Navigate to={ROUTES.LOGIN} state={{ from: location }} replace />;
+		}
+		return (
+			<WrappedComponent
+				coursesList={coursesList}
+				authorsList={authorsList}
+				courseId={courseId}
+			/>
+		);
+	};
+	return HOC;
+};
+
+CourseInfoWrapper.propTypes = {
 	coursesList: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string,
@@ -83,7 +132,9 @@ CourseInfo.propTypes = {
 	),
 };
 
-CourseInfo.defaultProps = {
+CourseInfoWrapper.defaultProps = {
 	coursesList: [],
 	authorsList: [],
 };
+
+export const CourseInfo = CourseInfoWrapper(CourseInfoUI);
