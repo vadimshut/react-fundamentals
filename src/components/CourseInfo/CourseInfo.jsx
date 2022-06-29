@@ -12,11 +12,10 @@ import { getAuthorsNameList } from '../../helpers/getAuthors';
 
 export const CourseInfo = ({ coursesList, authorsList }) => {
 	const { courseId } = useParams();
-	console.log(123);
 
 	const { id, title, description, creationDate, duration, authors } = useMemo(
 		() => findCourse(coursesList, courseId),
-		[coursesList]
+		[coursesList, courseId]
 	);
 
 	const courseDuration = useMemo(() => getCourseDuration(duration), [duration]);
