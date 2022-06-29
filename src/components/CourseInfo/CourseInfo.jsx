@@ -26,8 +26,7 @@ export const CourseInfo = ({ coursesList, authorsList }) => {
 	);
 	const authorsNameList = useMemo(
 		() => getAuthorsNameList(authors, authorsList),
-		authors,
-		authorsList
+		[authors, authorsList]
 	);
 
 	return (
