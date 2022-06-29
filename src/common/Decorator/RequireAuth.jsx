@@ -1,6 +1,6 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import { ROUTES } from '../constants';
-import { Auth } from './auth';
+import { ROUTES } from '../../constants';
+import { Auth } from '../../helpers/auth';
 
 export const RequireAuth = ({ children }) => {
 	const isAuth = new Auth().checkAuthorization();

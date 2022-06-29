@@ -101,7 +101,6 @@ export const CreateCourse = ({ authorsList, createNewCourse }) => {
 
 		createNewCourse(newCourse, selectedAuthors);
 		navigate('/courses', { replace: true });
-		console.log('create');
 	};
 
 	return (

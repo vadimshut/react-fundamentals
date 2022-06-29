@@ -24,6 +24,7 @@
 
   .leftContainer {
     width: 65%;
+
     .describe {
       word-wrap: break-word;
     }
@@ -38,11 +39,13 @@
   }
 
   .authors {
+
     ul {
       margin: 1rem 0 0;
       padding: 0;
       list-style: none;
     }
+
     li {
       margin-bottom: 0.5rem;
       padding-left: 0.5rem;

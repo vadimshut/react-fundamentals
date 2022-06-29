@@ -9,8 +9,9 @@ import { Courses } from './components/Courses/Courses';
 import { CreateCourse } from './components/CreateCourse/CreateCourse';
 
 import { updateAuthors } from './helpers/updateAuthors';
-import { RequireAuth } from './helpers/RequireAuth';
+import { RequireAuth } from './common/Decorator/RequireAuth';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
+import { Page404 } from './components/Page404/Page404';
 
 function App() {
 	const [courses, setCourses] = useState(mockedCoursesList);
@@ -59,7 +60,8 @@ function App() {
 					}
 				/>
 
-				<Route path='*' element={<Navigate to={ROUTES.LOGIN} />} />
+				{/*<Route path='*' element={<Navigate to={ROUTES.LOGIN} />} />*/}
+				<Route path='*' element={<Page404 />} />
 			</Routes>
 		</BrowserRouter>
 	);
