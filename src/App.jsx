@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import { mockedAuthorsList, mockedCoursesList } from './constants';
+import { mockedAuthorsList, mockedCoursesList, ROUTES } from './constants';
 
 import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
@@ -10,6 +10,7 @@ import { CreateCourse } from './components/CreateCourse/CreateCourse';
 
 import { updateAuthors } from './helpers/updateAuthors';
 import { RequireAuth } from './helpers/RequireAuth';
+import { CourseInfo } from './components/CourseInfo/CourseInfo';
 
 function App() {
 	const [courses, setCourses] = useState(mockedCoursesList);
@@ -27,29 +28,38 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<Navigate to='/courses' />} />
-				<Route path='/login' element={<Login />} />
-				<Route path='/registration' element={<Registration />} />
+				<Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.COURSES} />} />
+				<Route path={ROUTES.LOGIN} element={<Login />} />
+				<Route path={ROUTES.REGISTRATION} element={<Registration />} />
 				<Route
-					path='/courses'
+					path={ROUTES.COURSES}
 					element={
 						<RequireAuth>
 							<Courses coursesList={courses} authorsList={authors} />
 						</RequireAuth>
 					}
 				/>
-				{/*<Route path='/courses/:courseId' element={<App />} />*/}
 				<Route
-					path='/courses/add'
+					path={ROUTES.COURSE_ID}
 					element={
-						<CreateCourse
-							authorsList={authors}
-							createNewCourse={createNewCourse}
-						/>
+						<RequireAuth>
+							<CourseInfo coursesList={courses} authorsList={authors} />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path={ROUTES.ADD_COURSE}
+					element={
+						<RequireAuth>
+							<CreateCourse
+								authorsList={authors}
+								createNewCourse={createNewCourse}
+							/>
+						</RequireAuth>
 					}
 				/>
 
-				<Route path='*' element={<Navigate to='/login' />} />
+				<Route path='*' element={<Navigate to={ROUTES.LOGIN} />} />
 			</Routes>
 		</BrowserRouter>
 	);

@@ -16,4 +16,8 @@ export class Auth {
 	getUserName() {
 		return !this._data ? '' : this._data.name;
 	}
+
+	static logout() {
+		localStorage.removeItem('auth');
+	}
 }

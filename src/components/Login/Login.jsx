@@ -1,21 +1,28 @@
 import { useCallback, useReducer } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
-import { ENDPOINTS, REQUEST_METHODS, USE_REDUCER_TYPES } from '../../constants';
+import {
+	ENDPOINTS,
+	ERROR_MESSAGES,
+	REQUEST_METHODS,
+	ROUTES,
+	USE_REDUCER_TYPES,
+} from '../../constants';
 import { createBody } from '../../helpers/createBody';
 import { Fetch } from '../../helpers/fetch';
+import { Auth } from '../../helpers/auth';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
 import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
-import { Link } from 'react-router-dom';
 
 import './login.scss';
 
 export const Login = () => {
 	const [state, dispatch] = useReducer(reducer, initialState, init);
 	const { email, password, isError, errorMessage } = state;
+	const navigate = useNavigate();
 
 	const handleChangeEmail = useCallback((e) => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_EMAIL, payload: e.target.value });
@@ -27,14 +34,22 @@ export const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const isAuth = new Auth().checkAuthorization();
+		if (isAuth) {
+			dispatch({
+				type: USE_REDUCER_TYPES.SET_ERROR,
+				payload: ERROR_MESSAGES.logError,
+			});
+			return;
+		}
 		const body = createBody({ email, password });
 		const response = await Fetch(ENDPOINTS.LOGIN, REQUEST_METHODS.POST, body);
+		const result = await response.json();
 		if (response.ok) {
 			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
-			// 	navigate('/login', { replace: true });
+			Auth.setAuthorization(result);
+			navigate(ROUTES.COURSES, { replace: true });
 		} else {
-			const result = await response.json();
-			console.log(result.result);
 			dispatch({
 				type: USE_REDUCER_TYPES.SET_ERROR,
 				payload: result.result,
@@ -68,7 +83,7 @@ export const Login = () => {
 					<Button buttonName='Login' form='formLogin' />
 					<div className='redirect-to-login'>
 						If you have an account you can{' '}
-						<Link className='registrationLink' to='/registration'>
+						<Link className='registrationLink' to={ROUTES.REGISTRATION}>
 							Registration
 						</Link>
 					</div>

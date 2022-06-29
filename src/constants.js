@@ -15,6 +15,8 @@ export const ERROR_MESSAGES = {
 	moreThanZero: 'Value should bore than 0.',
 	moreThanOneAuthor: 'Should contain 1 or more authors.',
 	globalAlert: 'Please, fill in all fields',
+	logError:
+		'Before logging in as a new user, log out with the previous account',
 };
 
 export const PLACEHOLDERS = {
@@ -41,6 +43,15 @@ export const ENDPOINTS = {
 export const REQUEST_METHODS = {
 	GET: 'GET',
 	POST: 'POST',
+};
+
+export const ROUTES = {
+	ROOT: '/',
+	LOGIN: '/login',
+	REGISTRATION: '/registration',
+	COURSES: '/courses',
+	ADD_COURSE: '/courses/add',
+	COURSE_ID: '/courses/:courseId',
 };
 
 export const mockedCoursesList = [

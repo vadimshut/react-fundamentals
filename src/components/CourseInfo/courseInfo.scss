@@ -1,0 +1,51 @@
+.courseInfo {
+  min-height: 90%;
+  display: flex;
+  flex-direction: column;
+  column-gap: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 4px 3px rgba(0,0,0,0.32);
+  border-radius: 0.25rem;
+
+  .content {
+    flex: 1 0 auto;
+    display: flex;
+    column-gap: 1rem;
+    font-size: 1rem;
+  }
+
+  .title{
+    flex: 0 0 auto;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .leftContainer {
+    width: 65%;
+    .describe {
+      word-wrap: break-word;
+    }
+  }
+
+  .rightContainer {
+    width: 35%;
+  }
+
+  .mb-0_5 {
+    margin-bottom: 0.5rem;
+  }
+
+  .authors {
+    ul {
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      margin-bottom: 0.5rem;
+      padding-left: 0.5rem;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { BUTTON_NAMES } from '../../constants';
+import { BUTTON_NAMES, ROUTES } from '../../constants';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -31,7 +31,7 @@ export const Courses = ({ coursesList, authorsList }) => {
 	);
 
 	const handleClickAddCourse = () => {
-		navigate('/courses/add', { replace: true });
+		navigate(ROUTES.ADD_COURSE, { replace: true });
 	};
 
 	return (
@@ -56,6 +56,7 @@ export const Courses = ({ coursesList, authorsList }) => {
 					}) => (
 						<CourseCard
 							key={id}
+							id={id}
 							title={title}
 							description={description}
 							creationDate={creationDate}

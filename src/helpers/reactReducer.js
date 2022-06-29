@@ -1,7 +1,7 @@
 import { USE_REDUCER_TYPES } from '../constants';
 
 const initialState = {
-	isRegistrationError: false,
+	isError: false,
 	errorMessage: '',
 	name: '',
 	email: '',
@@ -17,13 +17,13 @@ function reducer(state, action) {
 		case USE_REDUCER_TYPES.SET_ERROR:
 			return {
 				...state,
-				isRegistrationError: !initialState.isRegistrationError,
+				isError: true,
 				errorMessage: action.payload,
 			};
 		case USE_REDUCER_TYPES.RESET_ERROR:
 			return {
 				...state,
-				isRegistrationError: initialState.isRegistrationError,
+				isError: initialState.isError,
 				errorMessage: initialState.errorMessage,
 			};
 		case USE_REDUCER_TYPES.SET_NAME:

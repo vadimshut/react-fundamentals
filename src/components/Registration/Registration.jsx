@@ -1,9 +1,14 @@
 import { useCallback, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { initialState, reducer, init } from '../../helpers/reactReducer';
 
-import { ENDPOINTS, REQUEST_METHODS, USE_REDUCER_TYPES } from '../../constants';
+import { initialState, reducer, init } from '../../helpers/reactReducer';
+import {
+	ENDPOINTS,
+	REQUEST_METHODS,
+	ROUTES,
+	USE_REDUCER_TYPES,
+} from '../../constants';
 import { Fetch } from '../../helpers/fetch';
 import { createBody } from '../../helpers/createBody';
 
@@ -17,7 +22,7 @@ import './registration.scss';
 export const Registration = () => {
 	const [state, dispatch] = useReducer(reducer, initialState, init);
 	const navigate = useNavigate();
-	const { name, email, password, isRegistrationError, errorMessage } = state;
+	const { name, email, password, isError, errorMessage } = state;
 
 	const handleChangeName = useCallback((e) => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_NAME, payload: e.target.value });
@@ -41,7 +46,7 @@ export const Registration = () => {
 		);
 		if (response.ok) {
 			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
-			navigate('/login', { replace: true });
+			navigate(ROUTES.LOGIN, { replace: true });
 		} else {
 			const result = await response.json();
 			dispatch({
@@ -87,12 +92,12 @@ export const Registration = () => {
 					<Button buttonName='Registration' form='formRegistration' />
 					<div className='redirect-to-login'>
 						If you have an account you can{' '}
-						<Link className='loginLink' to='/login'>
+						<Link className='loginLink' to={ROUTES.LOGIN}>
 							Login
 						</Link>
 					</div>
 
-					{isRegistrationError && (
+					{isError && (
 						<div className='error'>
 							<Error erorDescription={errorMessage} />
 						</div>
