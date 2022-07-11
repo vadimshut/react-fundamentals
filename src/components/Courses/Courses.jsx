@@ -1,85 +1,73 @@
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
-import { BUTTON_NAMES } from '../../constants';
+import { useNavigate } from 'react-router-dom';
+import { BUTTON_NAMES, ROUTES } from '../../constants';
 
-import { updateAuthors } from '../../helpers/updateAuthors';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
-import { CreateCourse } from '../CreateCourse/CreateCourse';
 import { Button } from '../../common/Button/Button';
+import { PageDecorator } from '../../common/Decorator/PageDecorator';
 
 import './courses.scss';
 
 export const Courses = ({ coursesList, authorsList }) => {
-	const [courses, setCourses] = useState(coursesList);
 	const [filteredCourses, setFilteredCourses] = useState([]);
-	const [authors, setAuthors] = useState(authorsList);
-	const [shouldShowCreateCourse, setShouldShowCreateCourse] = useState(false);
+	const navigate = useNavigate();
 
 	useMemo(() => {
-		setFilteredCourses(courses);
-	}, [courses]);
+		setFilteredCourses(coursesList);
+	}, [coursesList]);
 
 	const handleClickSearch = useCallback(
 		(searchValue) => {
-			const showCourses = courses.filter(
+			const showCourses = coursesList.filter(
 				({ title, id }) =>
 					title.toLowerCase().includes(searchValue.toLowerCase()) ||
 					id.toLowerCase().includes(searchValue.toLowerCase())
 			);
 			setFilteredCourses(showCourses);
 		},
-		[courses]
+		[coursesList]
 	);
 
-	const createNewCourse = useCallback(
-		(newCourse, newAuthors) => {
-			const newPersonToAuthors = updateAuthors(authors, newAuthors);
-			setCourses([...courses, newCourse]);
-			setAuthors([...authors, ...newPersonToAuthors]);
-			setShouldShowCreateCourse(!shouldShowCreateCourse);
-		},
-		[authors, courses, shouldShowCreateCourse]
-	);
+	const handleClickAddCourse = () => {
+		navigate(ROUTES.ADD_COURSE, { replace: true });
+	};
 
 	return (
-		<div className='courses'>
-			{shouldShowCreateCourse && (
-				<CreateCourse authorsList={authors} createNewCourse={createNewCourse} />
-			)}
-			{!shouldShowCreateCourse && (
-				<>
-					<div className='coursesControlsWrapper'>
-						<SearchBar onClick={handleClickSearch} />
-						<Button
-							buttonName={BUTTON_NAMES.addCourse}
-							onClick={() => setShouldShowCreateCourse(!shouldShowCreateCourse)}
-						/>
-					</div>
+		<PageDecorator>
+			<div className='courses'>
+				<div className='coursesControlsWrapper'>
+					<SearchBar onClick={handleClickSearch} />
+					<Button
+						buttonName={BUTTON_NAMES.addCourse}
+						onClick={handleClickAddCourse}
+					/>
+				</div>
 
-					{filteredCourses.map(
-						({
-							id,
-							title,
-							description,
-							creationDate,
-							duration,
-							authors: authorsIdsList,
-						}) => (
-							<CourseCard
-								key={id}
-								title={title}
-								description={description}
-								creationDate={creationDate}
-								duration={duration}
-								authorsIdsList={authorsIdsList}
-								authorsList={authors}
-							/>
-						)
-					)}
-				</>
-			)}
-		</div>
+				{filteredCourses.map(
+					({
+						id,
+						title,
+						description,
+						creationDate,
+						duration,
+						authors: authorsIdsList,
+					}) => (
+						<CourseCard
+							key={id}
+							id={id}
+							title={title}
+							description={description}
+							creationDate={creationDate}
+							duration={duration}
+							authorsIdsList={authorsIdsList}
+							authorsList={authorsList}
+						/>
+					)
+				)}
+			</div>
+		</PageDecorator>
 	);
 };
 

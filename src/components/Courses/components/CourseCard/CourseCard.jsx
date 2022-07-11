@@ -1,6 +1,7 @@
 import PropTypes, { shape } from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../common/Button/Button';
-import { BUTTON_NAMES } from '../../../../constants';
+import { BUTTON_NAMES, ROUTES } from '../../../../constants';
 
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
@@ -15,10 +16,18 @@ export const CourseCard = ({
 	duration,
 	authorsIdsList,
 	authorsList,
+	id,
 }) => {
+	const navigate = useNavigate();
 	const courseDuration = getCourseDuration(duration);
 	const courseCreationDate = formatCreationDate(creationDate);
 	const authorsToString = getAuthors(authorsIdsList, authorsList);
+
+	const handleShowCourse = () => {
+		navigate(`${ROUTES.COURSES}/${id}`, {
+			replace: true,
+		});
+	};
 
 	return (
 		<div className='CourseCard'>
@@ -42,7 +51,10 @@ export const CourseCard = ({
 					<span>{courseCreationDate}</span>
 				</div>
 				<div className='buttonWrapper'>
-					<Button buttonName={BUTTON_NAMES.showCourse} />
+					<Button
+						buttonName={BUTTON_NAMES.showCourse}
+						onClick={handleShowCourse}
+					/>
 				</div>
 			</div>
 		</div>
@@ -50,6 +62,7 @@ export const CourseCard = ({
 };
 
 CourseCard.propTypes = {
+	id: PropTypes.string,
 	title: PropTypes.string,
 	description: PropTypes.string,
 	creationDate: PropTypes.string,
@@ -64,6 +77,7 @@ CourseCard.propTypes = {
 };
 
 CourseCard.defaultProps = {
+	id: null,
 	title: null,
 	description: null,
 	creationDate: null,
