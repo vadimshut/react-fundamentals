@@ -1,18 +1,16 @@
-import PropTypes, { shape } from 'prop-types';
 import { useMemo } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import PropTypes, { shape } from 'prop-types';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
 import { getAuthorsNameList } from '../../helpers/getAuthors';
-import { checkExistCourse } from '../../helpers/checkExistCourse';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { findCourse } from '../../helpers/findCourse';
 
 import './courseInfo.scss';
 import { BackToCourses } from './components/BackToCourses/BackToCourses';
-import { ROUTES } from '../../constants';
+import { CourseInfoContainer } from './components/CourseInfoContainer';
 
 const CourseInfoUI = ({ coursesList, authorsList, courseId }) => {
 	const { id, title, description, creationDate, duration, authors } = useMemo(
@@ -94,47 +92,4 @@ CourseInfoUI.defaultProps = {
 	courseId: '',
 };
 
-const CourseInfoWrapper = (WrappedComponent) => {
-	const HOC = ({ coursesList, authorsList }) => {
-		const { courseId } = useParams();
-		let location = useLocation();
-		const isCourseExist = checkExistCourse(courseId, coursesList);
-		if (!courseId || !isCourseExist) {
-			return <Navigate to={ROUTES.LOGIN} state={{ from: location }} replace />;
-		}
-		return (
-			<WrappedComponent
-				coursesList={coursesList}
-				authorsList={authorsList}
-				courseId={courseId}
-			/>
-		);
-	};
-	return HOC;
-};
-
-CourseInfoWrapper.propTypes = {
-	coursesList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
-	authorsList: PropTypes.arrayOf(
-		shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-};
-
-CourseInfoWrapper.defaultProps = {
-	coursesList: [],
-	authorsList: [],
-};
-
-export const CourseInfo = CourseInfoWrapper(CourseInfoUI);
+export const CourseInfo = CourseInfoContainer(CourseInfoUI);

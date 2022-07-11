@@ -60,7 +60,6 @@ function App() {
 					}
 				/>
 
-				{/*<Route path='*' element={<Navigate to={ROUTES.LOGIN} />} />*/}
 				<Route path='*' element={<Page404 />} />
 			</Routes>
 		</BrowserRouter>
