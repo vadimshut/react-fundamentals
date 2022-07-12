@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes, { shape } from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
 
@@ -11,11 +10,16 @@ import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AddDuration } from './components/AddDuration/AddDuration';
 import { Authors } from './components/Authors/Authors';
 
-import './create-course.scss';
 import { getDate } from '../../helpers/getDate';
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
+import { useSelector } from 'react-redux';
+import { getAuthors } from '../../store/authors/authors';
+import { updateAuthors } from '../../helpers/updateAuthors';
 
-export const CreateCourse = ({ authorsList, createNewCourse }) => {
+import './create-course.scss';
+
+export const CreateCourse = () => {
+	const authorsList = useSelector(getAuthors);
 	const [error, setError] = useState(false);
 	const [authors, setAuthors] = useState(authorsList);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
@@ -24,6 +28,15 @@ export const CreateCourse = ({ authorsList, createNewCourse }) => {
 	const [duration, setDuration] = useState('');
 
 	const navigate = useNavigate();
+
+	const createNewCourse = useCallback(
+		(newCourse, newAuthors) => {
+			const newPersonToAuthors = updateAuthors(authors, newAuthors);
+			// setCourses([...courses, newCourse]);
+			setAuthors([...authors, ...newPersonToAuthors]);
+		},
+		[authors]
+	);
 
 	const handleAddRemoveAuthor = useCallback(
 		({ id, name, action }) => {
@@ -159,19 +172,4 @@ export const CreateCourse = ({ authorsList, createNewCourse }) => {
 			</form>
 		</PageDecorator>
 	);
-};
-
-CreateCourse.propTypes = {
-	createNewCourse: PropTypes.func,
-	authorsList: PropTypes.arrayOf(
-		shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-};
-
-CreateCourse.defaultProps = {
-	createNewCourse: null,
-	authorsList: [],
 };

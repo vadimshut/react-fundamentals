@@ -47,7 +47,13 @@
 
   .buttonWrapper{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    column-gap: 0.5rem;
+
+    .button-icon {
+      width: 50px;
+      padding: 0;
+    }
   }
 }
 

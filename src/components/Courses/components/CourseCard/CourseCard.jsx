@@ -1,8 +1,15 @@
+import { useCallback } from 'react';
 import PropTypes, { shape } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Icon } from 'react-icons-kit';
+import { trash } from 'react-icons-kit/iconic/trash';
+import { pencil } from 'react-icons-kit/iconic/pencil';
+
 import { Button } from '../../../../common/Button/Button';
 import { BUTTON_NAMES, ROUTES } from '../../../../constants';
 
+import { deleteCourse } from '../../../../store/courses/courses';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 import { getAuthors } from '../../../../helpers/getAuthors';
@@ -19,6 +26,7 @@ export const CourseCard = ({
 	id,
 }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const courseDuration = getCourseDuration(duration);
 	const courseCreationDate = formatCreationDate(creationDate);
 	const authorsToString = getAuthors(authorsIdsList, authorsList);
@@ -28,6 +36,10 @@ export const CourseCard = ({
 			replace: true,
 		});
 	};
+
+	const handleDeleteCourse = useCallback(() => {
+		dispatch(deleteCourse(id));
+	}, [dispatch, id]);
 
 	return (
 		<div className='CourseCard'>
@@ -55,6 +67,12 @@ export const CourseCard = ({
 						buttonName={BUTTON_NAMES.showCourse}
 						onClick={handleShowCourse}
 					/>
+					<Button className='button-icon'>
+						<Icon size={20} icon={pencil} />
+					</Button>
+					<Button className='button-icon' onClick={handleDeleteCourse}>
+						<Icon size={20} icon={trash} />
+					</Button>
 				</div>
 			</div>
 		</div>
