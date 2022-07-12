@@ -17,6 +17,10 @@ export class Auth {
 		return !this._data ? '' : this._data.name;
 	}
 
+	getToken() {
+		return !this._data ? '' : this._data.token;
+	}
+
 	static logout() {
 		localStorage.removeItem('auth');
 	}

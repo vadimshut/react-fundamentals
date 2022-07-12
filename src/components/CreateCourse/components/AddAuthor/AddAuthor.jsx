@@ -11,10 +11,13 @@ import { Input } from '../../../../common/Input/Input';
 import { Button } from '../../../../common/Button/Button';
 
 import './add-author.scss';
+import { useDispatch } from 'react-redux';
+import { addAuthors } from '../../../../store/authors/authors';
 
 export const AddAuthor = ({ onClick }) => {
 	const [name, setName] = useState('');
 	const [isError, setIsError] = useState(false);
+	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setName(e.target.value);
@@ -28,6 +31,7 @@ export const AddAuthor = ({ onClick }) => {
 		}
 		const id = uuidv4();
 		onClick({ id, name });
+		dispatch(addAuthors({ name, id }));
 		setIsError(false);
 		setName('');
 	};

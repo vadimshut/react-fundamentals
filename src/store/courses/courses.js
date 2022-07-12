@@ -14,6 +14,15 @@ export const fetchAllCourses = createAsyncThunk(
 	}
 );
 
+export const fetchAddCourse = createAsyncThunk(
+	'/courses/fetchAddCourse',
+	async (body) => {
+		const response = await apiService.addNewCourse('courses/add', body);
+		const result = await response.json();
+		return result.result;
+	}
+);
+
 const coursesSlice = createSlice({
 	name: 'courses',
 	initialState,
@@ -32,6 +41,13 @@ const coursesSlice = createSlice({
 		});
 		builder.addCase(fetchAllCourses.rejected, (state) => {
 			state.courses = [];
+		});
+
+		builder.addCase(fetchAddCourse.fulfilled, (state, action) => {
+			state.courses = state.courses.push(action.payload);
+		});
+		builder.addCase(fetchAddCourse.rejected, (state, action) => {
+			console.log('error');
 		});
 	},
 });

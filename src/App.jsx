@@ -11,12 +11,11 @@ import { CreateCourse } from './components/CreateCourse/CreateCourse';
 import { RequireAuth } from './common/Decorator/RequireAuth';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Page404 } from './components/Page404/Page404';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchAllCourses } from './store/courses/courses';
-import { fetchAllAuthors, getAuthors } from './store/authors/authors';
+import { fetchAllAuthors } from './store/authors/authors';
 
 function App() {
-	const authors = useSelector(getAuthors);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -50,7 +49,7 @@ function App() {
 					path={ROUTES.ADD_COURSE}
 					element={
 						<RequireAuth>
-							<CreateCourse authorsList={authors} />
+							<CreateCourse />
 						</RequireAuth>
 					}
 				/>

@@ -1,50 +1,45 @@
 import { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
 
+import { getAuthors } from '../../store/authors/authors';
+import { addCourse } from '../../store/courses/courses';
+
+import { checkValidate } from '../../helpers/checkValidate';
+import { createNewCourse } from '../../helpers/createNewCourse';
+
+import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Button } from '../../common/Button/Button';
 import { Input } from '../../common/Input/Input';
-import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AddDuration } from './components/AddDuration/AddDuration';
 import { Authors } from './components/Authors/Authors';
-
-import { getDate } from '../../helpers/getDate';
-import { PageDecorator } from '../../common/Decorator/PageDecorator';
-import { useSelector } from 'react-redux';
-import { getAuthors } from '../../store/authors/authors';
-import { updateAuthors } from '../../helpers/updateAuthors';
+import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
 
 import './create-course.scss';
 
 export const CreateCourse = () => {
+	const navigate = useNavigate();
 	const authorsList = useSelector(getAuthors);
-	const [error, setError] = useState(false);
-	const [authors, setAuthors] = useState(authorsList);
+	const dispatch = useDispatch();
+
+	const [availableAuthors, setAvailableAuthors] = useState(authorsList);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
+
+	const [error, setError] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState('');
 
-	const navigate = useNavigate();
-
-	const createNewCourse = useCallback(
-		(newCourse, newAuthors) => {
-			const newPersonToAuthors = updateAuthors(authors, newAuthors);
-			// setCourses([...courses, newCourse]);
-			setAuthors([...authors, ...newPersonToAuthors]);
-		},
-		[authors]
-	);
-
 	const handleAddRemoveAuthor = useCallback(
 		({ id, name, action }) => {
 			if (action === 'add') {
-				const updatedStateAuthors = authors.filter(
-					(author) => author.id !== id
+				const updatedStateAuthors = availableAuthors.filter(
+					({ id: authorId }) => authorId !== id
 				);
-				setAuthors(updatedStateAuthors);
+				setAvailableAuthors(updatedStateAuthors);
 				setSelectedAuthors([...selectedAuthors, { id, name }]);
 				return;
 			}
@@ -53,16 +48,16 @@ export const CreateCourse = () => {
 			);
 
 			setSelectedAuthors(updatedStateSelectedAuthors);
-			setAuthors([...authors, { id, name }]);
+			setAvailableAuthors([...availableAuthors, { id, name }]);
 		},
-		[authors, selectedAuthors]
+		[availableAuthors, selectedAuthors]
 	);
 
 	const createNewAuthor = useCallback(
 		(newAuthor) => {
-			setAuthors([...authors, newAuthor]);
+			setAvailableAuthors([...availableAuthors, newAuthor]);
 		},
-		[authors]
+		[availableAuthors]
 	);
 
 	const handleChangeTitle = useCallback((e) => {
@@ -77,42 +72,31 @@ export const CreateCourse = () => {
 		setDescription(e.target.value);
 	}, []);
 
-	const isValidated = () => {
-		if (
-			!title ||
-			title.length < 2 ||
-			!description ||
-			description.length < 2 ||
-			!+duration ||
-			!selectedAuthors.length
-		)
-			return false;
-		return true;
-	};
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		const isValidated = checkValidate(
+			title,
+			description,
+			duration,
+			selectedAuthors
+		);
 
-		if (!isValidated()) {
+		if (!isValidated) {
 			setError(true);
 			alert(ERROR_MESSAGES.globalAlert);
 			return;
 		}
 
 		const newAuthorsIds = selectedAuthors.map(({ id }) => id);
-		const id = uuidv4();
-		const creationDate = getDate();
 
-		const newCourse = {
-			id,
+		const newCourse = createNewCourse(
 			title,
 			description,
-			creationDate,
-			duration: +duration,
-			authors: newAuthorsIds,
-		};
+			duration,
+			newAuthorsIds
+		);
 
-		createNewCourse(newCourse, selectedAuthors);
+		dispatch(addCourse(newCourse));
 		navigate('/courses', { replace: true });
 	};
 
@@ -146,7 +130,7 @@ export const CreateCourse = () => {
 				</div>
 				<div className='selectAuthors'>
 					<Authors
-						authorsList={authors}
+						authorsList={availableAuthors}
 						authorsTitle='Authors'
 						onClick={handleAddRemoveAuthor}
 					/>
