@@ -1,30 +1,28 @@
-import { useCallback, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import { mockedAuthorsList, mockedCoursesList, ROUTES } from './constants';
+import { ROUTES } from './constants';
 
 import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
 import { Courses } from './components/Courses/Courses';
 import { CreateCourse } from './components/CreateCourse/CreateCourse';
 
-import { updateAuthors } from './helpers/updateAuthors';
 import { RequireAuth } from './common/Decorator/RequireAuth';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Page404 } from './components/Page404/Page404';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllCourses } from './store/courses/courses';
+import { fetchAllAuthors, getAuthors } from './store/authors/authors';
 
 function App() {
-	const [courses, setCourses] = useState(mockedCoursesList);
-	const [authors, setAuthors] = useState(mockedAuthorsList);
+	const authors = useSelector(getAuthors);
+	const dispatch = useDispatch();
 
-	const createNewCourse = useCallback(
-		(newCourse, newAuthors) => {
-			const newPersonToAuthors = updateAuthors(authors, newAuthors);
-			setCourses([...courses, newCourse]);
-			setAuthors([...authors, ...newPersonToAuthors]);
-		},
-		[authors, courses]
-	);
+	useEffect(() => {
+		dispatch(fetchAllCourses());
+		dispatch(fetchAllAuthors());
+	}, [dispatch]);
 
 	return (
 		<BrowserRouter>
@@ -36,7 +34,7 @@ function App() {
 					path={ROUTES.COURSES}
 					element={
 						<RequireAuth>
-							<Courses coursesList={courses} authorsList={authors} />
+							<Courses />
 						</RequireAuth>
 					}
 				/>
@@ -44,7 +42,7 @@ function App() {
 					path={ROUTES.COURSE_ID}
 					element={
 						<RequireAuth>
-							<CourseInfo coursesList={courses} authorsList={authors} />
+							<CourseInfo />
 						</RequireAuth>
 					}
 				/>
@@ -52,10 +50,7 @@ function App() {
 					path={ROUTES.ADD_COURSE}
 					element={
 						<RequireAuth>
-							<CreateCourse
-								authorsList={authors}
-								createNewCourse={createNewCourse}
-							/>
+							<CreateCourse authorsList={authors} />
 						</RequireAuth>
 					}
 				/>
