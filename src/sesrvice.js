@@ -35,7 +35,30 @@ class ApiService {
 			method: this.GET,
 			headers: {
 				'Content-Type': this.contentType,
+				'Access-Control-Allow-Origin': '*',
 			},
+		});
+	}
+
+	async login(endpoint, body) {
+		return await fetch(`${this.baseUrl}/${endpoint}`, {
+			method: this.POST,
+			headers: {
+				'Content-Type': this.contentType,
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: body,
+		});
+	}
+
+	async registration(endpoint, body) {
+		return await fetch(`${this.baseUrl}/${endpoint}`, {
+			method: this.POST,
+			headers: {
+				'Content-Type': this.contentType,
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: body,
 		});
 	}
 }

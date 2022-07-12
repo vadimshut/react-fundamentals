@@ -33,7 +33,6 @@ const coursesSlice = createSlice({
 		deleteCourse(state, action) {
 			state.courses = state.courses.filter(({ id }) => id !== action.payload);
 		},
-		updateCourse(state, action) {},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCourses.fulfilled, (state, action) => {
@@ -53,5 +52,5 @@ const coursesSlice = createSlice({
 });
 
 export const getCourses = (state) => state.coursesReducer.courses;
-export const { addCourse, deleteCourse, updateCourse } = coursesSlice.actions;
+export const { addCourse, deleteCourse } = coursesSlice.actions;
 export const coursesReducer = coursesSlice.reducer;
