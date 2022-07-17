@@ -1,10 +1,15 @@
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { checkExistCourse } from '../../../helpers/checkExistCourse';
 import { ROUTES } from '../../../constants';
-import PropTypes, { shape } from 'prop-types';
+
+import { getCourses } from '../../../store/courses/courses';
+import { getAuthors } from '../../../store/authors/authors';
 
 export const CourseInfoContainer = (WrappedComponent) => {
-	const HOC = ({ coursesList, authorsList }) => {
+	const HOC = () => {
+		const coursesList = useSelector(getCourses);
+		const authorsList = useSelector(getAuthors);
 		const { courseId } = useParams();
 		let location = useLocation();
 		const isCourseExist = checkExistCourse(courseId, coursesList);
@@ -20,28 +25,4 @@ export const CourseInfoContainer = (WrappedComponent) => {
 		);
 	};
 	return HOC;
-};
-
-CourseInfoContainer.propTypes = {
-	coursesList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
-	authorsList: PropTypes.arrayOf(
-		shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-};
-
-CourseInfoContainer.defaultProps = {
-	coursesList: [],
-	authorsList: [],
 };

@@ -1,7 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
-import PropTypes, { shape } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
+
+import { getCourses } from '../../store/courses/courses';
+import { getAuthors } from '../../store/authors/authors';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -10,7 +13,10 @@ import { PageDecorator } from '../../common/Decorator/PageDecorator';
 
 import './courses.scss';
 
-export const Courses = ({ coursesList, authorsList }) => {
+export const Courses = () => {
+	const coursesList = useSelector(getCourses);
+	const authorsList = useSelector(getAuthors);
+
 	const [filteredCourses, setFilteredCourses] = useState([]);
 	const navigate = useNavigate();
 
@@ -69,28 +75,4 @@ export const Courses = ({ coursesList, authorsList }) => {
 			</div>
 		</PageDecorator>
 	);
-};
-
-Courses.propTypes = {
-	coursesList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
-	authorsList: PropTypes.arrayOf(
-		shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-};
-
-Courses.defaultProps = {
-	coursesList: [],
-	authorsList: [],
 };

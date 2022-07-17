@@ -1,16 +1,15 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { ERROR_MESSAGES, ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
-import {
-	ENDPOINTS,
-	ERROR_MESSAGES,
-	REQUEST_METHODS,
-	ROUTES,
-	USE_REDUCER_TYPES,
-} from '../../constants';
 import { createBody } from '../../helpers/createBody';
-import { Fetch } from '../../helpers/fetch';
 import { Auth } from '../../helpers/auth';
+import { fetchLogin,  } from '../../store/user/actions.user';
+import {getAuthData} from '../../store/user/user'
+
+
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
@@ -20,6 +19,9 @@ import { Button } from '../../common/Button/Button';
 import './login.scss';
 
 export const Login = () => {
+	const dispatchRedux = useDispatch();
+	const { isAuth, token, error } = useSelector(getAuthData);
+
 	const [state, dispatch] = useReducer(reducer, initialState, init);
 	const { email, password, isError, errorMessage } = state;
 	const navigate = useNavigate();
@@ -34,7 +36,6 @@ export const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const isAuth = new Auth().checkAuthorization();
 		if (isAuth) {
 			dispatch({
 				type: USE_REDUCER_TYPES.SET_ERROR,
@@ -43,19 +44,25 @@ export const Login = () => {
 			return;
 		}
 		const body = createBody({ email, password });
-		const response = await Fetch(ENDPOINTS.LOGIN, REQUEST_METHODS.POST, body);
-		const result = await response.json();
-		if (response.ok) {
-			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
-			Auth.setAuthorization(result);
-			navigate(ROUTES.COURSES, { replace: true });
-		} else {
+		dispatchRedux(fetchLogin(body));
+	};
+
+	useEffect(() => {
+		if (error) {
 			dispatch({
 				type: USE_REDUCER_TYPES.SET_ERROR,
-				payload: result.result,
+				payload: error,
 			});
 		}
-	};
+	}, [error]);
+
+	useEffect(() => {
+		if (isAuth) {
+			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
+			Auth.setAuthorization(token);
+			navigate(ROUTES.COURSES, { replace: true });
+		}
+	}, [isAuth, navigate, token]);
 
 	return (
 		<PageDecorator>

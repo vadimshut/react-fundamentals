@@ -2,10 +2,8 @@ export class Auth {
 	constructor() {
 		this._data = JSON.parse(localStorage.getItem('auth'));
 	}
-	static setAuthorization(data) {
-		const name = data.user.name;
-		const token = data.result;
-		localStorage.setItem('auth', JSON.stringify({ token, name }));
+	static setAuthorization(token) {
+		localStorage.setItem('auth', JSON.stringify({ token }));
 	}
 	checkAuthorization() {
 		if (!this._data) return false;
@@ -13,8 +11,8 @@ export class Auth {
 		return true;
 	}
 
-	getUserName() {
-		return !this._data ? '' : this._data.name;
+	getToken() {
+		return !this._data ? '' : this._data.token;
 	}
 
 	static logout() {
