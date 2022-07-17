@@ -1,8 +1,8 @@
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { checkExistCourse } from '../../../helpers/checkExistCourse';
 import { ROUTES } from '../../../constants';
 
-import { useSelector } from 'react-redux';
 import { getCourses } from '../../../store/courses/courses';
 import { getAuthors } from '../../../store/authors/authors';
 

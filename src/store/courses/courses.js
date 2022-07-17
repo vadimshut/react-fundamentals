@@ -1,27 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { apiService } from '../../sesrvice';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllCourses, fetchAddCourse } from './coureses.actions';
 
 const initialState = {
 	courses: [],
 };
-
-export const fetchAllCourses = createAsyncThunk(
-	'courses/fetchAllCourses',
-	async () => {
-		const response = await apiService.getAllCourses('courses/all');
-		const result = await response.json();
-		return result.result;
-	}
-);
-
-export const fetchAddCourse = createAsyncThunk(
-	'/courses/fetchAddCourse',
-	async (body) => {
-		const response = await apiService.addNewCourse('courses/add', body);
-		const result = await response.json();
-		return result.result;
-	}
-);
 
 const coursesSlice = createSlice({
 	name: 'courses',
@@ -51,6 +33,8 @@ const coursesSlice = createSlice({
 	},
 });
 
-export const getCourses = (state) => state.coursesReducer.courses;
-export const { addCourse, deleteCourse } = coursesSlice.actions;
-export const coursesReducer = coursesSlice.reducer;
+const getCourses = (state) => state.coursesReducer.courses;
+const { addCourse, deleteCourse } = coursesSlice.actions;
+const coursesReducer = coursesSlice.reducer;
+
+export { getCourses, addCourse, deleteCourse, coursesReducer };

@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import { ROUTES } from './constants';
+import { fetchAllCourses } from './store/courses/coureses.actions';
+import { fetchAllAuthors } from './store/authors/authors.actions';
 
 import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
@@ -11,9 +14,6 @@ import { CreateCourse } from './components/CreateCourse/CreateCourse';
 import { RequireAuth } from './common/Decorator/RequireAuth';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Page404 } from './components/Page404/Page404';
-import { useDispatch } from 'react-redux';
-import { fetchAllCourses } from './store/courses/courses';
-import { fetchAllAuthors } from './store/authors/authors';
 
 function App() {
 	const dispatch = useDispatch();

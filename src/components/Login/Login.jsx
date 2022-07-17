@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useReducer } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { initialState, reducer, init } from '../../helpers/reactReducer';
+
 import { ERROR_MESSAGES, ROUTES, USE_REDUCER_TYPES } from '../../constants';
+import { initialState, reducer, init } from '../../helpers/reactReducer';
 import { createBody } from '../../helpers/createBody';
 import { Auth } from '../../helpers/auth';
+import { fetchLogin,  } from '../../store/user/actions.user';
+import {getAuthData} from '../../store/user/user'
+
+
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
@@ -11,8 +17,6 @@ import { Input } from '../../common/Input/Input';
 import { Button } from '../../common/Button/Button';
 
 import './login.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchLogin, getAuthData } from '../../store/user/user';
 
 export const Login = () => {
 	const dispatchRedux = useDispatch();
@@ -32,7 +36,6 @@ export const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// const isAuth = new Auth().checkAuthorization();
 		if (isAuth) {
 			dispatch({
 				type: USE_REDUCER_TYPES.SET_ERROR,

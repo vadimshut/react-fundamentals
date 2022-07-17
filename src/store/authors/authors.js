@@ -1,18 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { apiService } from '../../sesrvice';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllAuthors } from './authors.actions';
 
 const initialState = {
 	authors: [],
 };
-
-export const fetchAllAuthors = createAsyncThunk(
-	'authors/fetchAllAuthors',
-	async () => {
-		const response = await apiService.getAllAuthors('authors/all');
-		const result = await response.json();
-		return result.result;
-	}
-);
 
 const authorsSlice = createSlice({
 	name: 'authors',
@@ -38,7 +29,8 @@ const authorsSlice = createSlice({
 	},
 });
 
-export const getAuthors = (state) => state.authorsReducer.authors;
-export const { addAuthors, deleteAuthors, updateAuthors } =
-	authorsSlice.actions;
-export const authorsReducer = authorsSlice.reducer;
+const getAuthors = (state) => state.authorsReducer.authors;
+const { addAuthors, deleteAuthors, updateAuthors } = authorsSlice.actions;
+const authorsReducer = authorsSlice.reducer;
+
+export { getAuthors, addAuthors, deleteAuthors, updateAuthors, authorsReducer };

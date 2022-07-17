@@ -7,10 +7,10 @@ import { getAuthorsNameList } from '../../helpers/getAuthors';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { findCourse } from '../../helpers/findCourse';
-
-import './courseInfo.scss';
 import { BackToCourses } from './components/BackToCourses/BackToCourses';
 import { CourseInfoContainer } from './components/CourseInfoContainer';
+
+import './courseInfo.scss';
 
 const CourseInfoUI = ({ coursesList, authorsList, courseId }) => {
 	const { id, title, description, creationDate, duration, authors } = useMemo(

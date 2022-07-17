@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
 import { ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { createBody } from '../../helpers/createBody';
-import { fetchRegistration, getRegistrationData } from '../../store/user/user';
+import { getRegistrationData } from '../../store/user/user';
+import { fetchRegistration } from '../../store/user/actions.user';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
