@@ -6,10 +6,8 @@ import { ERROR_MESSAGES, ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
 import { createBody } from '../../helpers/createBody';
 import { Auth } from '../../helpers/auth';
-import { fetchLogin,  } from '../../store/user/actions.user';
-import {getAuthData} from '../../store/user/user'
-
-
+import { fetchLogin } from '../../store/user/actions.user';
+import { getAuthData } from '../../store/user/user';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
