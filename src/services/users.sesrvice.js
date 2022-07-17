@@ -1,11 +1,4 @@
-import { Auth } from '../helpers/auth';
-
 class UsersService {
-	GET = 'GET';
-	POST = 'POST';
-	PUT = 'PUT';
-	DELETE = 'DELETE';
-
 	constructor() {
 		this.baseUrl = 'http://localhost:4000';
 		this.baseHeaders = {
@@ -16,7 +9,7 @@ class UsersService {
 
 	async login(endpoint, body) {
 		const response = await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: this.POST,
+			method: 'POST',
 			headers: this.baseHeaders,
 			body: body,
 		});
@@ -28,7 +21,7 @@ class UsersService {
 
 	async registration(endpoint, body) {
 		return await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: this.POST,
+			method: 'POST',
 			headers: this.baseHeaders,
 			body: body,
 		});
@@ -36,7 +29,7 @@ class UsersService {
 
 	async usersMe(endpoint) {
 		return await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: this.GET,
+			method: 'GET',
 			headers: {
 				...this.baseHeaders,
 				Authorization: this.token,
@@ -45,4 +38,4 @@ class UsersService {
 	}
 }
 
-export const usersService = new UsersService(Auth);
+export const usersService = new UsersService();

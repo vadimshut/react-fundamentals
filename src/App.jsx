@@ -16,12 +16,12 @@ import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Page404 } from './components/Page404/Page404';
 
 function App() {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(fetchAllCourses());
-		dispatch(fetchAllAuthors());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchAllCourses());
+	// 	dispatch(fetchAllAuthors());
+	// }, [dispatch]);
 
 	return (
 		<BrowserRouter>

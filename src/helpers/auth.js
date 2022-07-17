@@ -1,11 +1,12 @@
-export class Auth {
+export class Authority {
 	constructor() {
-		this._data = JSON.parse(localStorage.getItem('auth'));
+		this.key = 'auth';
+		this._data = JSON.parse(localStorage.getItem(this.key));
 	}
-	static setAuthorization(token) {
-		localStorage.setItem('auth', JSON.stringify({ token }));
+	setToken(token) {
+		localStorage.setItem(this.key, JSON.stringify({ token }));
 	}
-	checkAuthorization() {
+	checkIsAuthorityTokenExist() {
 		if (!this._data) return false;
 		if (!this._data.token) return false;
 		return true;
@@ -15,7 +16,8 @@ export class Auth {
 		return !this._data ? '' : this._data.token;
 	}
 
-	static logout() {
-		localStorage.removeItem('auth');
+	removeToken() {
+		localStorage.removeItem(this.key);
 	}
 }
+export const authority = new Authority();
