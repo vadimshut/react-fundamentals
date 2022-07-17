@@ -17,6 +17,7 @@ export const ERROR_MESSAGES = {
 	globalAlert: 'Please, fill in all fields',
 	logError:
 		'Before logging in as a new user, log out with the previous account',
+	reducerDefaultMessage: 'Error with action',
 };
 
 export const PLACEHOLDERS = {
@@ -33,16 +34,6 @@ export const USE_REDUCER_TYPES = {
 	SET_EMAIL: 'setEmail',
 	SET_PASSWORD: 'setPassword',
 	RESET_FORM: 'resetForm',
-};
-
-export const ENDPOINTS = {
-	LOGIN: 'login',
-	REGISTRATION: 'register',
-};
-
-export const REQUEST_METHODS = {
-	GET: 'GET',
-	POST: 'POST',
 };
 
 export const ROUTES = {

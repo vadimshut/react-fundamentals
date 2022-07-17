@@ -1,4 +1,4 @@
-import { USE_REDUCER_TYPES } from '../constants';
+import { ERROR_MESSAGES, USE_REDUCER_TYPES } from '../constants';
 
 const initialState = {
 	isError: false,
@@ -35,7 +35,7 @@ function reducer(state, action) {
 		case USE_REDUCER_TYPES.RESET_FORM:
 			return init(action.payload);
 		default:
-			throw new Error('Error with action');
+			throw new Error(ERROR_MESSAGES.reducerDefaultMessage);
 	}
 }
 

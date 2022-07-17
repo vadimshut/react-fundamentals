@@ -5,15 +5,7 @@ import { fetchLogin, fetchRegistration } from './actions.user';
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {
-		logout(state) {
-			state.isAuth = false;
-			state.name = '';
-			state.email = '';
-			state.token = '';
-			state.error = '';
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchLogin.fulfilled, (state, action) => {
 			const {
@@ -45,12 +37,12 @@ const userSlice = createSlice({
 	},
 });
 
+const userReducer = userSlice.reducer;
+
 const getAuthData = (state) => state.userReducer;
 const getRegistrationData = (state) => ({
 	registerSuccess: state.userReducer.registerSuccess,
 	registerError: state.userReducer.registerError,
 });
-const { logout } = userSlice.actions;
-const userReducer = userSlice.reducer;
 
-export { getAuthData, getRegistrationData, logout, userReducer };
+export { getAuthData, getRegistrationData, userReducer };

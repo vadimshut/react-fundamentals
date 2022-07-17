@@ -23,7 +23,6 @@ const fetchRegistration = createAsyncThunk(
 		try {
 			const response = await apiService.registration('register', body);
 			const result = await response.json();
-			console.log(result);
 			if (!response.ok) {
 				throw new Error(`${result.errors[0]}`);
 			}
@@ -34,4 +33,10 @@ const fetchRegistration = createAsyncThunk(
 	}
 );
 
-export { fetchLogin, fetchRegistration };
+const fetchUsersMe = createAsyncThunk('courses/fetchUsersMe', async () => {
+	const response = await apiService.usersMe('users/me');
+	const result = await response.json();
+	return result;
+});
+
+export { fetchLogin, fetchRegistration, fetchUsersMe };
