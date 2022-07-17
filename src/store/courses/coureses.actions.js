@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { apiService } from '../../sesrvice';
+import { coursesService } from '../../services/courses.service';
 
 const fetchAllCourses = createAsyncThunk(
 	'courses/fetchAllCourses',
 	async () => {
-		const response = await apiService.getAllCourses('courses/all');
+		const response = await coursesService.getAllCourses('all');
 		const result = await response.json();
 		return result.result;
 	}
@@ -13,7 +13,7 @@ const fetchAllCourses = createAsyncThunk(
 const fetchAddCourse = createAsyncThunk(
 	'/courses/fetchAddCourse',
 	async (body) => {
-		const response = await apiService.addNewCourse('courses/add', body);
+		const response = await coursesService.addNewCourse('add', body);
 		const result = await response.json();
 		return result.result;
 	}

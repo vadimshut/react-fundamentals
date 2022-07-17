@@ -21,7 +21,7 @@ export const Login = () => {
 	const { isAuth, token, error } = useSelector(getAuthData);
 	const navigate = useNavigate();
 
-	const [{ email, password, isError, errorMessage }, dispatch] = useReducer(
+	const [{ email, password, errorMessage }, dispatch] = useReducer(
 		reducer,
 		initialState,
 		init
@@ -48,14 +48,14 @@ export const Login = () => {
 		dispatchRedux(fetchLogin(createBody({ email, password })));
 	};
 
-	useEffect(() => {
-		if (error) {
-			dispatch({
-				type: USE_REDUCER_TYPES.SET_ERROR,
-				payload: error,
-			});
-		}
-	}, [error]);
+	// useEffect(() => {
+	// 	if (error) {
+	// 		dispatch({
+	// 			type: USE_REDUCER_TYPES.SET_ERROR,
+	// 			payload: error,
+	// 		});
+	// 	}
+	// }, [error]);
 
 	useEffect(() => {
 		if (isAuth) {
@@ -94,7 +94,7 @@ export const Login = () => {
 							Registration
 						</Link>
 					</div>
-					{isError && (
+					{error && (
 						<div className='error'>
 							<Error erorDescription={errorMessage} />
 						</div>

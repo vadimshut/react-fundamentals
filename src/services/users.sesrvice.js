@@ -1,19 +1,17 @@
-import { Auth } from './helpers/auth';
+import { Auth } from '../helpers/auth';
 
-class ApiService {
+class UsersService {
 	GET = 'GET';
 	POST = 'POST';
 	PUT = 'PUT';
 	DELETE = 'DELETE';
 
-	constructor(Auth) {
-		this.auth = new Auth();
+	constructor() {
 		this.baseUrl = 'http://localhost:4000';
 		this.baseHeaders = {
 			'Content-Type': 'application/json',
 			'Access-Control-Allow-Origin': '*',
 		};
-		this.token = this.auth.getToken();
 	}
 
 	async login(endpoint, body) {
@@ -23,7 +21,7 @@ class ApiService {
 			body: body,
 		});
 		const { result } = await response.json();
-		this.auth.setAuthorization(result);
+
 		this.token = result;
 		return response;
 	}
@@ -45,31 +43,6 @@ class ApiService {
 			},
 		});
 	}
-
-	async getAllAuthors(endpoint) {
-		return await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: this.GET,
-			headers: this.baseHeaders,
-		});
-	}
-
-	async getAllCourses(endpoint) {
-		return await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: this.GET,
-			headers: this.baseHeaders,
-		});
-	}
-
-	async addNewCourse(endpoint, body) {
-		return await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: this.POST,
-			headers: {
-				...this.baseHeaders,
-				Authorization: this.token,
-			},
-			body: body,
-		});
-	}
 }
 
-export const apiService = new ApiService(Auth);
+export const usersService = new UsersService(Auth);
