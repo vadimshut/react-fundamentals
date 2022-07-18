@@ -5,11 +5,8 @@ const fetchLogin = createAsyncThunk(
 	'courses/fetchLogin',
 	async (body, { rejectWithValue }) => {
 		try {
-			const response = await usersService.login('login', body);
-			const result = await response.json();
-			if (!response.ok) {
-				throw new Error(`${result.errors[0]}`);
-			}
+			const { status, result } = await usersService.login('login', body);
+			if (!status) throw new Error(`${result.errors[0]}`);
 			return result;
 		} catch (error) {
 			return rejectWithValue(error.message);

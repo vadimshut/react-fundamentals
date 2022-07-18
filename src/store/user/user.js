@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './user.initialState';
-import { fetchLogin, fetchRegistration } from './actions.user';
+import { fetchLogin, fetchRegistration, fetchUsersMe } from './actions.user';
 
 const userSlice = createSlice({
 	name: 'user',
@@ -40,6 +40,7 @@ const userSlice = createSlice({
 const userReducer = userSlice.reducer;
 
 const getAuthData = (state) => state.userReducer;
+
 const getRegistrationData = (state) => ({
 	registerSuccess: state.userReducer.registerSuccess,
 	registerError: state.userReducer.registerError,

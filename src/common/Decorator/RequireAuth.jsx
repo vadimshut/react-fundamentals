@@ -1,9 +1,9 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import { ROUTES } from '../../constants';
-import { authority } from '../../helpers/auth';
+import { authorityTokenService } from '../../services/AuthorityTokenService';
 
 export const RequireAuth = ({ children }) => {
-	const isAuth = authority.getToken();
+	const isAuth = authorityTokenService.getToken();
 	let location = useLocation();
 	return isAuth ? (
 		children

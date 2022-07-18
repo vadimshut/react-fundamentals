@@ -1,22 +1,28 @@
+import { authorityTokenService } from './AuthorityTokenService';
+
 class UsersService {
-	constructor() {
+	constructor(authorityTokenService) {
 		this.baseUrl = 'http://localhost:4000';
 		this.baseHeaders = {
 			'Content-Type': 'application/json',
 			'Access-Control-Allow-Origin': '*',
 		};
+		this.authorityTokenService = authorityTokenService;
 	}
 
 	async login(endpoint, body) {
-		const response = await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: 'POST',
-			headers: this.baseHeaders,
-			body: body,
-		});
-		const { result } = await response.json();
-
-		this.token = result;
-		return response;
+		try {
+			const response = await fetch(`${this.baseUrl}/${endpoint}`, {
+				method: 'POST',
+				headers: this.baseHeaders,
+				body: body,
+			});
+			const result = await response.json();
+			this.authorityTokenService.setToken(result.result);
+			return { status: response.ok, result };
+		} catch (e) {
+			return { status: false, result: { errors: [e.message] } };
+		}
 	}
 
 	async registration(endpoint, body) {
@@ -38,4 +44,4 @@ class UsersService {
 	}
 }
 
-export const usersService = new UsersService();
+export const usersService = new UsersService(authorityTokenService);

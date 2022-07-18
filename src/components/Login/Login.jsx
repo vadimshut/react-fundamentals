@@ -45,7 +45,8 @@ export const Login = () => {
 			});
 			return;
 		}
-		dispatchRedux(fetchLogin(createBody({ email, password })));
+		const body = createBody({ email, password });
+		dispatchRedux(fetchLogin(body));
 	};
 
 	// useEffect(() => {
