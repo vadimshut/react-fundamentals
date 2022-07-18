@@ -10,4 +10,13 @@ const fetchAllAuthors = createAsyncThunk(
 	}
 );
 
-export { fetchAllAuthors };
+const fetchAddAuthor = createAsyncThunk(
+	'authors/fetchAddAuthor',
+	async (body) => {
+		const response = await authorsService.addAuthor('add', body);
+		const result = await response.json();
+		return result.result;
+	}
+);
+
+export { fetchAllAuthors, fetchAddAuthor };

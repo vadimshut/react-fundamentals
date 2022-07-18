@@ -1,10 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
 
 import { getCourses } from '../../store/courses/courses';
-import { getAuthors } from '../../store/authors/authors';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -12,6 +11,7 @@ import { Button } from '../../common/Button/Button';
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 
 import './courses.scss';
+import { getAuthors } from '../../helpers/getAuthors';
 
 export const Courses = () => {
 	const coursesList = useSelector(getCourses);

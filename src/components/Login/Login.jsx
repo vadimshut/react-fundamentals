@@ -7,7 +7,7 @@ import { initialState, reducer, init } from '../../helpers/reactReducer';
 
 import { createBody } from '../../helpers/createBody';
 import { fetchLogin } from '../../store/user/actions.user';
-import { getAuthData } from '../../store/user/user';
+import { getAuthData } from '../../store/dataFromStore';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
@@ -17,9 +17,9 @@ import { Button } from '../../common/Button/Button';
 import './login.scss';
 
 export const Login = () => {
+	const navigate = useNavigate();
 	const dispatchRedux = useDispatch();
 	const { isAuth, token, error } = useSelector(getAuthData);
-	const navigate = useNavigate();
 
 	const [{ email, password, errorMessage }, dispatch] = useReducer(
 		reducer,
@@ -37,7 +37,6 @@ export const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		if (isAuth) {
 			dispatch({
 				type: USE_REDUCER_TYPES.SET_ERROR,
@@ -45,18 +44,17 @@ export const Login = () => {
 			});
 			return;
 		}
-		const body = createBody({ email, password });
-		dispatchRedux(fetchLogin(body));
+		dispatchRedux(fetchLogin(createBody({ email, password })));
 	};
 
-	// useEffect(() => {
-	// 	if (error) {
-	// 		dispatch({
-	// 			type: USE_REDUCER_TYPES.SET_ERROR,
-	// 			payload: error,
-	// 		});
-	// 	}
-	// }, [error]);
+	useEffect(() => {
+		if (error) {
+			dispatch({
+				type: USE_REDUCER_TYPES.SET_ERROR,
+				payload: error,
+			});
+		}
+	}, [error]);
 
 	useEffect(() => {
 		if (isAuth) {

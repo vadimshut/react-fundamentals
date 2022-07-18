@@ -6,7 +6,9 @@ import { Button } from '../../common/Button/Button';
 
 import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthData } from '../../store/user/user';
+import { fetchLogout } from '../../store/user/actions.user';
+import { getAuthData } from '../../store/dataFromStore';
+import { useEffect } from 'react';
 
 export const Header = () => {
 	const navigate = useNavigate();
@@ -14,8 +16,12 @@ export const Header = () => {
 	const { name } = useSelector(getAuthData);
 
 	const handleClick = () => {
-		navigate(ROUTES.LOGIN, { replace: true });
+		dispatch(fetchLogout());
 	};
+
+	useEffect(() => {
+		if (!name) navigate(ROUTES.LOGIN, { replace: true });
+	}, [name]);
 
 	return (
 		<div className='header'>

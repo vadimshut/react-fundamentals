@@ -12,7 +12,6 @@ import { Button } from '../../../../common/Button/Button';
 
 import './add-author.scss';
 import { useDispatch } from 'react-redux';
-import { addAuthors } from '../../../../store/authors/authors';
 
 export const AddAuthor = ({ onClick }) => {
 	const [name, setName] = useState('');
@@ -31,7 +30,7 @@ export const AddAuthor = ({ onClick }) => {
 		}
 		const id = uuidv4();
 		onClick({ id, name });
-		dispatch(addAuthors({ name, id }));
+		// dispatch(addAuthors({ name, id }));
 		setIsError(false);
 		setName('');
 	};

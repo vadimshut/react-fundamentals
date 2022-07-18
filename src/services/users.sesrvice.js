@@ -10,6 +10,14 @@ class UsersService {
 		this.authorityTokenService = authorityTokenService;
 	}
 
+	async registration(endpoint, body) {
+		return await fetch(`${this.baseUrl}/${endpoint}`, {
+			method: 'POST',
+			headers: this.baseHeaders,
+			body: body,
+		});
+	}
+
 	async login(endpoint, body) {
 		try {
 			const response = await fetch(`${this.baseUrl}/${endpoint}`, {
@@ -25,12 +33,16 @@ class UsersService {
 		}
 	}
 
-	async registration(endpoint, body) {
-		return await fetch(`${this.baseUrl}/${endpoint}`, {
-			method: 'POST',
-			headers: this.baseHeaders,
-			body: body,
+	async logout(endpoint) {
+		const response = await fetch(`${this.baseUrl}/${endpoint}`, {
+			method: 'DELETE',
+			headers: {
+				...this.baseHeaders,
+				Authorization: this.authorityTokenService.getToken(),
+			},
 		});
+		if (response.ok) this.authorityTokenService.removeToken();
+		return { status: response.ok };
 	}
 
 	async usersMe(endpoint) {
@@ -38,7 +50,7 @@ class UsersService {
 			method: 'GET',
 			headers: {
 				...this.baseHeaders,
-				Authorization: this.token,
+				Authorization: this.authorityTokenService.getToken(),
 			},
 		});
 	}

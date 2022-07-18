@@ -4,7 +4,7 @@ import { checkExistCourse } from '../../../helpers/checkExistCourse';
 import { ROUTES } from '../../../constants';
 
 import { getCourses } from '../../../store/courses/courses';
-import { getAuthors } from '../../../store/authors/authors';
+import { getAuthors } from '../../../helpers/getAuthors';
 
 export const CourseInfoContainer = (WrappedComponent) => {
 	const HOC = () => {

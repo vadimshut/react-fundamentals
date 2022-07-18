@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
 
-import { getAuthors } from '../../store/authors/authors';
 import { addCourse } from '../../store/courses/courses';
 
 import { checkValidate } from '../../helpers/checkValidate';
@@ -18,9 +17,11 @@ import { AddDuration } from './components/AddDuration/AddDuration';
 import { Authors } from './components/Authors/Authors';
 import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
 
-import './create-course.scss';
+import { getAuthors } from '../../helpers/getAuthors';
 
-export const CreateCourse = () => {
+import './course-from.scss';
+
+export const CourseFrom = () => {
 	const navigate = useNavigate();
 	const authorsList = useSelector(getAuthors);
 	const dispatch = useDispatch();
