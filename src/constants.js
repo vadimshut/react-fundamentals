@@ -4,6 +4,7 @@ export const BUTTON_NAMES = {
 	search: 'Search',
 	addCourse: 'Add new course',
 	createCourse: 'Create course',
+	updateCourse: 'Update course',
 	createAuthor: 'Create author',
 	addAuthor: 'Add author',
 	deleteAuthor: 'Delete author',
@@ -41,6 +42,8 @@ export const ROUTES = {
 	LOGIN: '/login',
 	REGISTRATION: '/registration',
 	COURSES: '/courses',
-	ADD_COURSE: '/courses/add',
-	COURSE_ID: '/courses/:courseId',
+	COURSES_LIST: '',
+	ADD_COURSE: 'add',
+	UPDATE_COURSE: 'update/:courseId',
+	COURSE_INFO_ID: ':courseId',
 };

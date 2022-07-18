@@ -8,20 +8,16 @@ import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogout } from '../../store/user/actions.user';
 import { getAuthData } from '../../store/dataFromStore';
-import { useEffect } from 'react';
 
 export const Header = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { name } = useSelector(getAuthData);
 
-	const handleClick = () => {
-		dispatch(fetchLogout());
+	const handleClick = async () => {
+		await dispatch(fetchLogout());
+		navigate(ROUTES.LOGIN, { replace: true });
 	};
-
-	useEffect(() => {
-		if (!name) navigate(ROUTES.LOGIN, { replace: true });
-	}, [name]);
 
 	return (
 		<div className='header'>

@@ -1,9 +1,10 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
 
 import { getCourses } from '../../store/courses/courses';
+import { getAuthors } from '../../store/dataFromStore';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -11,14 +12,21 @@ import { Button } from '../../common/Button/Button';
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 
 import './courses.scss';
-import { getAuthors } from '../../helpers/getAuthors';
+import { fetchAllCourses } from '../../store/courses/coureses.actions';
+import { fetchAllAuthors } from '../../store/authors/authors.actions';
 
 export const Courses = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchAllCourses());
+		dispatch(fetchAllAuthors());
+	}, [dispatch]);
 	const coursesList = useSelector(getCourses);
 	const authorsList = useSelector(getAuthors);
 
 	const [filteredCourses, setFilteredCourses] = useState([]);
-	const navigate = useNavigate();
 
 	useMemo(() => {
 		setFilteredCourses(coursesList);

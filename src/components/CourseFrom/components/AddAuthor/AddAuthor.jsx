@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import {
 	BUTTON_NAMES,
 	ERROR_MESSAGES,
@@ -11,12 +10,10 @@ import { Input } from '../../../../common/Input/Input';
 import { Button } from '../../../../common/Button/Button';
 
 import './add-author.scss';
-import { useDispatch } from 'react-redux';
 
 export const AddAuthor = ({ onClick }) => {
 	const [name, setName] = useState('');
 	const [isError, setIsError] = useState(false);
-	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setName(e.target.value);
@@ -28,9 +25,7 @@ export const AddAuthor = ({ onClick }) => {
 			setIsError(true);
 			return;
 		}
-		const id = uuidv4();
-		onClick({ id, name });
-		// dispatch(addAuthors({ name, id }));
+		onClick(name);
 		setIsError(false);
 		setName('');
 	};
