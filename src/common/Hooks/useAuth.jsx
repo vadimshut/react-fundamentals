@@ -7,7 +7,7 @@ export const useAuth = () => {
 	const dispatch = useDispatch();
 	const role = useSelector(getRole);
 	const isAuth = authorityTokenService.checkIsAuthorityTokenExist();
-	if (!role) {
+	if (isAuth && !role) {
 		dispatch(fetchUsersMe());
 	}
 	return { role, isAuth };

@@ -9,6 +9,9 @@ export const PrivateRoute = ({ checkParameter, children }) => {
 	if (checkParameter === 'role' && role === 'admin') {
 		return children;
 	}
+	if (checkParameter === 'role' && role === 'user') {
+		return <Navigate to={ROUTES.COURSES} />;
+	}
 	return children;
 };
 

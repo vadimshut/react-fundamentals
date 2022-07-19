@@ -6,7 +6,7 @@ import { ERROR_MESSAGES, ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
 
 import { createBody } from '../../helpers/createBody';
-import { fetchLogin } from '../../store/user/actions.user';
+import { fetchLogin, fetchUsersMe } from '../../store/user/actions.user';
 import { getAuthData } from '../../store/dataFromStore';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
@@ -31,7 +31,7 @@ export const Login = () => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_PASSWORD, payload: e.target.value });
 	}, []);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (isAuth) {
 			dispatch({
@@ -55,7 +55,7 @@ export const Login = () => {
 	useEffect(() => {
 		if (isAuth) {
 			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
-			navigate(ROUTES.COURSES, { replace: true });
+			navigate(ROUTES.COURSES);
 		}
 	}, [isAuth, navigate, token]);
 
