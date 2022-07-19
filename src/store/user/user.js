@@ -52,6 +52,7 @@ const userSlice = createSlice({
 
 		builder.addCase(fetchUsersMe.fulfilled, (state, action) => {
 			const { name, email, role } = action.payload;
+			state.isAuth = true;
 			state.name = name;
 			state.email = email;
 			state.role = role;

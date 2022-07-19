@@ -12,7 +12,8 @@ import { getAuthData } from '../../store/dataFromStore';
 export const Header = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { name } = useSelector(getAuthData);
+	const { isAuth, name, role } = useSelector(getAuthData);
+	const userName = role === 'admin' ? 'admin' : name;
 
 	const handleClick = async () => {
 		await dispatch(fetchLogout());
@@ -22,9 +23,9 @@ export const Header = () => {
 	return (
 		<div className='header'>
 			<Logo />
-			{name && (
+			{isAuth && (
 				<div className='buttonWrapper'>
-					<div>{name.toUpperCase()}</div>
+					<div>{userName.toUpperCase()}</div>
 					<Button buttonName={BUTTON_NAMES.logout} onClick={handleClick} />
 				</div>
 			)}
