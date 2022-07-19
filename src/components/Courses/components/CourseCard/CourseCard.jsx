@@ -28,10 +28,14 @@ export const CourseCard = ({ title, description, creationDate, duration, authors
 			replace: true,
 		});
 	};
-
+	//TODO
 	const handleDeleteCourse = useCallback(() => {
 		dispatch(deleteCourse(id));
 	}, [dispatch, id]);
+
+	const handleUpdate = () => {
+		navigate(`${ROUTES.COURSES}/update/${id}`);
+	};
 
 	return (
 		<div className='CourseCard'>
@@ -56,7 +60,7 @@ export const CourseCard = ({ title, description, creationDate, duration, authors
 				</div>
 				<div className='buttonWrapper'>
 					<Button buttonName={BUTTON_NAMES.showCourse} onClick={handleShowCourse} />
-					<Button className='button-icon'>
+					<Button className='button-icon' onClick={handleUpdate}>
 						<Icon size={20} icon={pencil} />
 					</Button>
 					<Button className='button-icon' onClick={handleDeleteCourse}>

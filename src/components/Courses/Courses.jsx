@@ -44,7 +44,7 @@ export const Courses = () => {
 	);
 
 	const handleClickAddCourse = () => {
-		navigate(ROUTES.ADD_COURSE, { replace: true });
+		navigate(ROUTES.ADD_COURSE);
 	};
 
 	return (
@@ -69,3 +69,7 @@ export const Courses = () => {
 		</div>
 	);
 };
+
+// 1 courseForUpdate: null
+// 2 courseForUpdate: {...sdasd}
+// 3 click -> update => courseForUpdate: null

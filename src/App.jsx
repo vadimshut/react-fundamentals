@@ -6,9 +6,8 @@ import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
 import { Courses } from './components/Courses/Courses';
 
-// import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Page404 } from './components/Page404/Page404';
-import { RequireAuth } from './common/Decorator/RequireAuth';
+import { PrivateRoute } from './common/Decorator/PrivateRoute';
 import { CoursesRoutePage } from './components/CoursesRoutePage/CoursesRoutePage';
 import { CourseFrom } from './components/CourseFrom/CourseFrom';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
@@ -23,35 +22,44 @@ function App() {
 				<Route
 					path={ROUTES.COURSES}
 					element={
-						<RequireAuth>
+						<PrivateRoute>
 							<CoursesRoutePage />
-						</RequireAuth>
+						</PrivateRoute>
 					}
 				>
 					<Route
 						path={ROUTES.COURSES_LIST}
 						element={
-							<RequireAuth>
+							<PrivateRoute>
 								<Courses />
-							</RequireAuth>
+							</PrivateRoute>
 						}
 					/>
 
 					<Route
 						path={ROUTES.ADD_COURSE}
 						element={
-							<RequireAuth>
+							<PrivateRoute checkParameter='role'>
 								<CourseFrom />
-							</RequireAuth>
+							</PrivateRoute>
+						}
+					/>
+
+					<Route
+						path={ROUTES.UPDATE_COURSE}
+						element={
+							<PrivateRoute checkParameter='role'>
+								<CourseFrom />
+							</PrivateRoute>
 						}
 					/>
 
 					<Route
 						path={ROUTES.COURSE_INFO_ID}
 						element={
-							<RequireAuth>
+							<PrivateRoute>
 								<CourseInfo />
-							</RequireAuth>
+							</PrivateRoute>
 						}
 					/>
 				</Route>

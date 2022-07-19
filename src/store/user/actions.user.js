@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { usersService } from '../../services/users.sesrvice';
-import { resetToDefault } from './user';
 
 const fetchRegistration = createAsyncThunk('courses/fetchRegistration', async (body, { rejectWithValue }) => {
 	try {
