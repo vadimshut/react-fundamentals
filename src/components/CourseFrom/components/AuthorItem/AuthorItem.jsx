@@ -9,16 +9,14 @@ const BUTTON_NAME = {
 	false: BUTTON_NAMES.deleteAuthor,
 };
 export const AuthorItem = ({ author, action, onClick }) => {
-	const handleClick = () => {
+	const handleClick = (e) => {
+		e.preventDefault();
 		onClick({ ...author, action });
 	};
 	return (
 		<div className='authorItemComponent'>
 			<div>{author.name}</div>
-			<Button
-				buttonName={BUTTON_NAME[action === 'add']}
-				onClick={handleClick}
-			/>
+			<Button buttonName={BUTTON_NAME[action === 'add']} onClick={handleClick} />
 		</div>
 	);
 };

@@ -9,24 +9,23 @@ import { getAuthors } from '../../store/dataFromStore';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { PageDecorator } from '../../common/Decorator/PageDecorator';
 
-import './courses.scss';
 import { fetchAllCourses } from '../../store/courses/coureses.actions';
 import { fetchAllAuthors } from '../../store/authors/authors.actions';
+
+import './courses.scss';
 
 export const Courses = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const coursesList = useSelector(getCourses);
+	const authorsList = useSelector(getAuthors);
+	const [filteredCourses, setFilteredCourses] = useState([]);
 
 	useEffect(() => {
 		dispatch(fetchAllCourses());
 		dispatch(fetchAllAuthors());
 	}, [dispatch]);
-	const coursesList = useSelector(getCourses);
-	const authorsList = useSelector(getAuthors);
-
-	const [filteredCourses, setFilteredCourses] = useState([]);
 
 	useMemo(() => {
 		setFilteredCourses(coursesList);
@@ -49,38 +48,36 @@ export const Courses = () => {
 	};
 
 	return (
-		<PageDecorator>
-			<div className='courses'>
-				<div className='coursesControlsWrapper'>
-					<SearchBar onClick={handleClickSearch} />
-					<Button
-						buttonName={BUTTON_NAMES.addCourse}
-						onClick={handleClickAddCourse}
-					/>
-				</div>
-
-				{filteredCourses.map(
-					({
-						id,
-						title,
-						description,
-						creationDate,
-						duration,
-						authors: authorsIdsList,
-					}) => (
-						<CourseCard
-							key={id}
-							id={id}
-							title={title}
-							description={description}
-							creationDate={creationDate}
-							duration={duration}
-							authorsIdsList={authorsIdsList}
-							authorsList={authorsList}
-						/>
-					)
-				)}
+		<div className='courses'>
+			<div className='coursesControlsWrapper'>
+				<SearchBar onClick={handleClickSearch} />
+				<Button
+					buttonName={BUTTON_NAMES.addCourse}
+					onClick={handleClickAddCourse}
+				/>
 			</div>
-		</PageDecorator>
+
+			{filteredCourses.map(
+				({
+					id,
+					title,
+					description,
+					creationDate,
+					duration,
+					authors: authorsIdsList,
+				}) => (
+					<CourseCard
+						key={id}
+						id={id}
+						title={title}
+						description={description}
+						creationDate={creationDate}
+						duration={duration}
+						authorsIdsList={authorsIdsList}
+						authorsList={authorsList}
+					/>
+				)
+			)}
+		</div>
 	);
 };

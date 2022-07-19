@@ -43,6 +43,7 @@ const userSlice = createSlice({
 			state.registerSuccess = false;
 			state.registerError = action.payload;
 		});
+
 		builder.addCase(fetchLogout.fulfilled, (state) => {
 			state.isAuth = false;
 			state.name = '';

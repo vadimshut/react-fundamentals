@@ -1,11 +1,10 @@
-import { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../constants';
 
-import { addCourse } from '../../store/courses/courses';
-
+import { getAuthors } from '../../store/dataFromStore';
 import { checkValidate } from '../../helpers/checkValidate';
 import { createNewCourse } from '../../helpers/createNewCourse';
 
@@ -17,48 +16,29 @@ import { AddDuration } from './components/AddDuration/AddDuration';
 import { Authors } from './components/Authors/Authors';
 import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
 
-import { getAuthors } from '../../helpers/getAuthors';
-
 import './course-from.scss';
 
 export const CourseFrom = () => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const authorsList = useSelector(getAuthors);
-	const dispatch = useDispatch();
 
-	const [availableAuthors, setAvailableAuthors] = useState(authorsList);
 	const [selectedAuthors, setSelectedAuthors] = useState([]);
-
 	const [error, setError] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState('');
 
+	const availableAuthors = useMemo(() => {
+		return authorsList.filter(({ id }) => !selectedAuthors.map(({ id }) => id).includes(id));
+	}, [authorsList, selectedAuthors]);
+
 	const handleAddRemoveAuthor = useCallback(
 		({ id, name, action }) => {
-			if (action === 'add') {
-				const updatedStateAuthors = availableAuthors.filter(
-					({ id: authorId }) => authorId !== id
-				);
-				setAvailableAuthors(updatedStateAuthors);
-				setSelectedAuthors([...selectedAuthors, { id, name }]);
-				return;
-			}
-			const updatedStateSelectedAuthors = selectedAuthors.filter(
-				(selectedAuthor) => selectedAuthor.id !== id
-			);
-
-			setSelectedAuthors(updatedStateSelectedAuthors);
-			setAvailableAuthors([...availableAuthors, { id, name }]);
+			action === 'add'
+				? setSelectedAuthors([...selectedAuthors, { id, name }])
+				: setSelectedAuthors(selectedAuthors.filter((author) => author.id !== id));
 		},
-		[availableAuthors, selectedAuthors]
-	);
-
-	const createNewAuthor = useCallback(
-		(newAuthor) => {
-			setAvailableAuthors([...availableAuthors, newAuthor]);
-		},
-		[availableAuthors]
+		[selectedAuthors]
 	);
 
 	const handleChangeTitle = useCallback((e) => {
@@ -75,30 +55,14 @@ export const CourseFrom = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const isValidated = checkValidate(
-			title,
-			description,
-			duration,
-			selectedAuthors
-		);
-
+		const isValidated = checkValidate(title, description, duration, selectedAuthors);
 		if (!isValidated) {
 			setError(true);
 			alert(ERROR_MESSAGES.globalAlert);
 			return;
 		}
-
-		const newAuthorsIds = selectedAuthors.map(({ id }) => id);
-
-		const newCourse = createNewCourse(
-			title,
-			description,
-			duration,
-			newAuthorsIds
-		);
-
-		dispatch(addCourse(newCourse));
-		navigate('/courses', { replace: true });
+		// const newCourse = createNewCourse(title, description, duration, newAuthorsIds);
+		// navigate('/courses', { replace: true });
 	};
 
 	return (
@@ -127,14 +91,10 @@ export const CourseFrom = () => {
 					/>
 				</div>
 				<div className='addNewAuthor'>
-					<AddAuthor onClick={createNewAuthor} />
+					<AddAuthor />
 				</div>
 				<div className='selectAuthors'>
-					<Authors
-						authorsList={availableAuthors}
-						authorsTitle='Authors'
-						onClick={handleAddRemoveAuthor}
-					/>
+					<Authors authorsList={availableAuthors} authorsTitle='Authors' onClick={handleAddRemoveAuthor} />
 				</div>
 				<div className='enterDuration'>
 					<AddDuration
