@@ -1,10 +1,13 @@
+import { authorityTokenService } from './AuthorityTokenService';
+
 class CoursesService {
-	constructor() {
+	constructor(authorityTokenService) {
 		this.baseUrl = 'http://localhost:4000/courses';
 		this.baseHeaders = {
 			'Content-Type': 'application/json',
 			'Access-Control-Allow-Origin': '*',
 		};
+		this.authorityTokenService = authorityTokenService;
 	}
 	async getAllCourses(endpoint) {
 		return await fetch(`${this.baseUrl}/${endpoint}`, {
@@ -18,11 +21,21 @@ class CoursesService {
 			method: 'POST',
 			headers: {
 				...this.baseHeaders,
-				Authorization: this.token,
+				Authorization: this.authorityTokenService.getToken(),
 			},
 			body: body,
 		});
 	}
+
+	async deleteCourse(id) {
+		return await fetch(`${this.baseUrl}/${id}`, {
+			method: 'DELETE',
+			headers: {
+				...this.baseHeaders,
+				Authorization: this.authorityTokenService.getToken(),
+			},
+		});
+	}
 }
 
-export const coursesService = new CoursesService();
+export const coursesService = new CoursesService(authorityTokenService);

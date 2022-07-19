@@ -9,9 +9,6 @@ const coursesSlice = createSlice({
 	name: 'courses',
 	initialState,
 	reducers: {
-		addCourse(state, action) {
-			state.courses.push(action.payload);
-		},
 		deleteCourse(state, action) {
 			state.courses = state.courses.filter(({ id }) => id !== action.payload);
 		},
@@ -33,8 +30,7 @@ const coursesSlice = createSlice({
 	},
 });
 
-const getCourses = (state) => state.coursesReducer.courses;
-const { addCourse, deleteCourse } = coursesSlice.actions;
+const { deleteCourse } = coursesSlice.actions;
 const coursesReducer = coursesSlice.reducer;
 
-export { getCourses, addCourse, deleteCourse, coursesReducer };
+export { deleteCourse, coursesReducer };

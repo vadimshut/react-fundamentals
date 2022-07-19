@@ -3,8 +3,7 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { checkExistCourse } from '../../../helpers/checkExistCourse';
 import { ROUTES } from '../../../constants';
 
-import { getCourses } from '../../../store/courses/courses';
-import { getAuthors } from '../../../helpers/getAuthors';
+import { getAuthors, getCourses } from '../../../store/dataFromStore';
 
 export const CourseInfoContainer = (WrappedComponent) => {
 	const HOC = () => {

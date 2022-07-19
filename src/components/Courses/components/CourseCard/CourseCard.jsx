@@ -8,7 +8,6 @@ import { pencil } from 'react-icons-kit/iconic/pencil';
 
 import { BUTTON_NAMES, ROUTES } from '../../../../constants';
 import { getRole } from '../../../../store/dataFromStore';
-import { deleteCourse } from '../../../../store/courses/courses';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 import { getAuthors } from '../../../../helpers/getAuthors';
@@ -16,6 +15,7 @@ import { getAuthors } from '../../../../helpers/getAuthors';
 import { Button } from '../../../../common/Button/Button';
 
 import './course-card.scss';
+import { fetchDeleteCourse } from '../../../../store/courses/coureses.actions';
 
 export const CourseCard = ({ title, description, creationDate, duration, authorsIdsList, authorsList, id }) => {
 	const navigate = useNavigate();
@@ -34,7 +34,7 @@ export const CourseCard = ({ title, description, creationDate, duration, authors
 	};
 	//TODO
 	const handleDeleteCourse = useCallback(() => {
-		dispatch(deleteCourse(id));
+		dispatch(fetchDeleteCourse(id));
 	}, [dispatch, id]);
 
 	const handleUpdate = () => {

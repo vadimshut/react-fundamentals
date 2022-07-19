@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
 
-import { getCourses } from '../../store/courses/courses';
-import { getAuthors } from '../../store/dataFromStore';
+import { getAuthors, getCourses } from '../../store/dataFromStore';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';

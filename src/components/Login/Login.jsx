@@ -6,7 +6,7 @@ import { ERROR_MESSAGES, ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
 
 import { createBody } from '../../helpers/createBody';
-import { fetchLogin, fetchUsersMe } from '../../store/user/actions.user';
+import { fetchLogin } from '../../store/user/actions.user';
 import { getAuthData } from '../../store/dataFromStore';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
