@@ -21,11 +21,7 @@ export const Login = () => {
 	const dispatchRedux = useDispatch();
 	const { isAuth, token, error } = useSelector(getAuthData);
 
-	const [{ email, password, errorMessage }, dispatch] = useReducer(
-		reducer,
-		initialState,
-		init
-	);
+	const [{ email, password, errorMessage }, dispatch] = useReducer(reducer, initialState, init);
 
 	const handleChangeEmail = useCallback((e) => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_EMAIL, payload: e.target.value });

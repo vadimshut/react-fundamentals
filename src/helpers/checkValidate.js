@@ -1,9 +1,4 @@
-export const checkValidate = (
-	title,
-	description,
-	duration,
-	selectedAuthors
-) => {
+export const checkValidate = (title, description, duration, selectedAuthors) => {
 	return !(
 		!title ||
 		title.length < 2 ||

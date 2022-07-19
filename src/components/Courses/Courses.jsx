@@ -51,33 +51,21 @@ export const Courses = () => {
 		<div className='courses'>
 			<div className='coursesControlsWrapper'>
 				<SearchBar onClick={handleClickSearch} />
-				<Button
-					buttonName={BUTTON_NAMES.addCourse}
-					onClick={handleClickAddCourse}
-				/>
+				<Button buttonName={BUTTON_NAMES.addCourse} onClick={handleClickAddCourse} />
 			</div>
 
-			{filteredCourses.map(
-				({
-					id,
-					title,
-					description,
-					creationDate,
-					duration,
-					authors: authorsIdsList,
-				}) => (
-					<CourseCard
-						key={id}
-						id={id}
-						title={title}
-						description={description}
-						creationDate={creationDate}
-						duration={duration}
-						authorsIdsList={authorsIdsList}
-						authorsList={authorsList}
-					/>
-				)
-			)}
+			{filteredCourses.map(({ id, title, description, creationDate, duration, authors: authorsIdsList }) => (
+				<CourseCard
+					key={id}
+					id={id}
+					title={title}
+					description={description}
+					creationDate={creationDate}
+					duration={duration}
+					authorsIdsList={authorsIdsList}
+					authorsList={authorsList}
+				/>
+			))}
 		</div>
 	);
 };

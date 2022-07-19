@@ -16,13 +16,7 @@ export const CourseInfoContainer = (WrappedComponent) => {
 		if (!courseId || !isCourseExist) {
 			return <Navigate to={ROUTES.LOGIN} state={{ from: location }} replace />;
 		}
-		return (
-			<WrappedComponent
-				coursesList={coursesList}
-				authorsList={authorsList}
-				courseId={courseId}
-			/>
-		);
+		return <WrappedComponent coursesList={coursesList} authorsList={authorsList} courseId={courseId} />;
 	};
 	return HOC;
 };

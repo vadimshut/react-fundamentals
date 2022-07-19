@@ -16,15 +16,7 @@ import { getAuthors } from '../../../../helpers/getAuthors';
 
 import './course-card.scss';
 
-export const CourseCard = ({
-	title,
-	description,
-	creationDate,
-	duration,
-	authorsIdsList,
-	authorsList,
-	id,
-}) => {
+export const CourseCard = ({ title, description, creationDate, duration, authorsIdsList, authorsList, id }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const courseDuration = getCourseDuration(duration);
@@ -63,10 +55,7 @@ export const CourseCard = ({
 					<span>{courseCreationDate}</span>
 				</div>
 				<div className='buttonWrapper'>
-					<Button
-						buttonName={BUTTON_NAMES.showCourse}
-						onClick={handleShowCourse}
-					/>
+					<Button buttonName={BUTTON_NAMES.showCourse} onClick={handleShowCourse} />
 					<Button className='button-icon'>
 						<Icon size={20} icon={pencil} />
 					</Button>

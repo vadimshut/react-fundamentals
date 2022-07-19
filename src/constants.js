@@ -16,8 +16,7 @@ export const ERROR_MESSAGES = {
 	moreThanZero: 'Value should bore than 0.',
 	moreThanOneAuthor: 'Should contain 1 or more authors.',
 	globalAlert: 'Please, fill in all fields',
-	logError:
-		'Before logging in as a new user, log out with the previous account',
+	logError: 'Before logging in as a new user, log out with the previous account',
 	reducerDefaultMessage: 'Error with action',
 };
 

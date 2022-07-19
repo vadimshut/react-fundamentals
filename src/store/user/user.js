@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './user.initialState';
-import {
-	fetchLogin,
-	fetchLogout,
-	fetchRegistration,
-	fetchUsersMe,
-} from './actions.user';
+import { fetchLogin, fetchLogout, fetchRegistration, fetchUsersMe } from './actions.user';
 
 const userSlice = createSlice({
 	name: 'user',

@@ -19,15 +19,9 @@ const CourseInfoUI = ({ coursesList, authorsList, courseId }) => {
 	);
 
 	const courseDuration = useMemo(() => getCourseDuration(duration), [duration]);
-	const courseCreationDate = useMemo(
-		() => formatCreationDate(creationDate),
-		[creationDate]
-	);
+	const courseCreationDate = useMemo(() => formatCreationDate(creationDate), [creationDate]);
 
-	const authorsNameList = useMemo(
-		() => getAuthorsNameList(authors, authorsList),
-		[authors, authorsList]
-	);
+	const authorsNameList = useMemo(() => getAuthorsNameList(authors, authorsList), [authors, authorsList]);
 
 	return (
 		<PageDecorator>

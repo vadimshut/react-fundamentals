@@ -20,8 +20,7 @@ export const Registration = () => {
 	const navigate = useNavigate();
 	const dispatchRedux = useDispatch();
 	const { registerSuccess, registerError } = useSelector(getRegistrationData);
-	const [{ name, email, password, isError, errorMessage }, dispatch] =
-		useReducer(reducer, initialState, init);
+	const [{ name, email, password, isError, errorMessage }, dispatch] = useReducer(reducer, initialState, init);
 
 	const handleChangeName = useCallback((e) => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_NAME, payload: e.target.value });
@@ -63,13 +62,7 @@ export const Registration = () => {
 					<div>
 						<h1>Registration</h1>
 					</div>
-					<Input
-						placeholder='Enter name'
-						labelName='Name'
-						value={name}
-						onChange={handleChangeName}
-						required
-					/>
+					<Input placeholder='Enter name' labelName='Name' value={name} onChange={handleChangeName} required />
 
 					<Input
 						placeholder='Enter email'

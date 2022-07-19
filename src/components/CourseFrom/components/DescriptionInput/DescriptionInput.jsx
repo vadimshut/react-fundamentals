@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import './description-input.scss';
 import { Error } from '../../../../common/Error/Error';
 
-export const DescriptionInput = ({
-	labelName,
-	onChange,
-	value,
-	isError,
-	errorMessage,
-}) => {
+export const DescriptionInput = ({ labelName, onChange, value, isError, errorMessage }) => {
 	return (
 		<label className='descriptionTextArea row2'>
 			<div>
