@@ -49,6 +49,13 @@ const userSlice = createSlice({
 			state.registerSuccess = false;
 			state.role = '';
 		});
+
+		builder.addCase(fetchUsersMe.fulfilled, (state, action) => {
+			const { name, email, role } = action.payload;
+			state.name = name;
+			state.email = email;
+			state.role = role;
+		});
 	},
 });
 

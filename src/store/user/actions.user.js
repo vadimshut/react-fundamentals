@@ -36,7 +36,7 @@ const fetchLogout = createAsyncThunk('courses/fetchLogout', async (_, { rejectWi
 const fetchUsersMe = createAsyncThunk('courses/fetchUsersMe', async () => {
 	const response = await usersService.usersMe('users/me');
 	const result = await response.json();
-	return result;
+	return result.result;
 });
 
 export { fetchRegistration, fetchLogin, fetchLogout, fetchUsersMe };

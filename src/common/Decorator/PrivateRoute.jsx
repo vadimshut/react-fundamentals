@@ -3,20 +3,21 @@ import { ROUTES } from '../../constants';
 import PropTypes from 'prop-types';
 import { useAuth } from '../Hooks/useAuth';
 
-export const PrivateRoute = ({ children, checkParameter }) => {
+export const PrivateRoute = ({ checkParameter, children }) => {
 	const { role, isAuth } = useAuth();
 	if (!isAuth) return <Navigate to={ROUTES.LOGIN} />;
-	if (checkParameter === 'role') {
-		return role === 'admin' ? children : <Navigate to={ROUTES.LOGIN} />;
-	} else {
-		return { children };
+	if (checkParameter === 'role' && role === 'admin') {
+		return children;
 	}
+	return children;
 };
 
 PrivateRoute.propTypes = {
 	checkParameter: PropTypes.oneOf(['token', 'role']),
+	children: PropTypes.node,
 };
 
 PrivateRoute.defaultProps = {
 	checkParameter: 'token',
+	children: null,
 };
