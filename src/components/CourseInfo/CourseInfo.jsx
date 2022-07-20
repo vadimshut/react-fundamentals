@@ -5,7 +5,6 @@ import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
 import { getAuthorsNameList } from '../../helpers/getAuthors';
 
-import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { findCourse } from '../../helpers/findCourse';
 import { BackToCourses } from './components/BackToCourses/BackToCourses';
 import { CourseInfoContainer } from './components/CourseInfoContainer';
@@ -24,39 +23,37 @@ const CourseInfoUI = ({ coursesList, authorsList, courseId }) => {
 	const authorsNameList = useMemo(() => getAuthorsNameList(authors, authorsList), [authors, authorsList]);
 
 	return (
-		<PageDecorator>
-			<div className='courseInfo'>
-				<BackToCourses />
-				<h1 className='title'>{title}</h1>
-				<div className='content'>
-					<div className='leftContainer '>
-						<div className='describe'>{description}</div>
+		<div className='courseInfo'>
+			<BackToCourses />
+			<h1 className='title'>{title}</h1>
+			<div className='content'>
+				<div className='leftContainer '>
+					<div className='describe'>{description}</div>
+				</div>
+				<div className='rightContainer'>
+					<div className='id mb-0_5'>
+						<b>ID: </b>
+						<span>{id}</span>
 					</div>
-					<div className='rightContainer'>
-						<div className='id mb-0_5'>
-							<b>ID: </b>
-							<span>{id}</span>
-						</div>
-						<div className='duration mb-0_5'>
-							<b>Duration: </b>
-							<span>{`${courseDuration} hours`}</span>
-						</div>
-						<div className='created mb-0_5'>
-							<b>Created: </b>
-							<span>{courseCreationDate}</span>
-						</div>
-						<div className='authors mb-0_5'>
-							<b>Authors: </b>
-							<ul>
-								{authorsNameList.map(({ name, id }) => (
-									<li key={id}>{name}</li>
-								))}
-							</ul>
-						</div>
+					<div className='duration mb-0_5'>
+						<b>Duration: </b>
+						<span>{`${courseDuration} hours`}</span>
+					</div>
+					<div className='created mb-0_5'>
+						<b>Created: </b>
+						<span>{courseCreationDate}</span>
+					</div>
+					<div className='authors mb-0_5'>
+						<b>Authors: </b>
+						<ul>
+							{authorsNameList.map(({ name, id }) => (
+								<li key={id}>{name}</li>
+							))}
+						</ul>
 					</div>
 				</div>
 			</div>
-		</PageDecorator>
+		</div>
 	);
 };
 

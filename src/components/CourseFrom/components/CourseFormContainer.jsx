@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BUTTON_NAMES } from '../../../constants';
 import { getAuthors, getCourseForUpdate } from '../../../store/dataFromStore';
 import { fetchGetCourseById } from '../../../store/courses/coureses.actions';
-// import { fetchAllAuthors } from '../../../store/authors/authors.actions';
+import { fetchAllAuthors } from '../../../store/authors/authors.actions';
 
 import { getAuthorsFromAuthorsIds } from '../../../helpers/getAuthors';
 
@@ -18,10 +18,15 @@ export const CourseFromContainer = (WrappedComponent) => {
 
 		useEffect(() => {
 			if (courseId) {
-				console.log('courseId', courseId);
 				dispatch(fetchGetCourseById(courseId));
 			}
-		}, []);
+		}, [courseId, dispatch]);
+
+		useEffect(() => {
+			if (authors.length) {
+				dispatch(fetchAllAuthors());
+			}
+		}, [authors, dispatch]);
 
 		const authorsListFromIds = useMemo(() => getAuthorsFromAuthorsIds(authorsList, authors), [authors, authorsList]);
 		const buttonName = courseId ? BUTTON_NAMES.updateCourse : BUTTON_NAMES.createCourse;
@@ -41,9 +46,3 @@ export const CourseFromContainer = (WrappedComponent) => {
 	};
 	return HOC;
 };
-
-// useEffect(() => {
-// 	if (authors.length) {
-// 		dispatch(fetchAllAuthors());
-// 	}
-// }, [authors, dispatch]);

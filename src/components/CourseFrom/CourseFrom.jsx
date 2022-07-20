@@ -31,8 +31,6 @@ export const CourseFromUI = ({
 	const dispatch = useDispatch();
 	const authorsList = useSelector(getAuthors);
 
-	console.log(courseTitle, courseDescription, courseDuration, courseSelectedAuthors, buttonName, courseId);
-
 	const [selectedAuthors, setSelectedAuthors] = useState(courseSelectedAuthors);
 	const [error, setError] = useState(false);
 	const [title, setTitle] = useState(courseTitle);
