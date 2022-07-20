@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
 
 import { getAuthors, getCourses } from '../../store/dataFromStore';
+import { fetchAllCourses } from '../../store/courses/coureses.actions';
+import { fetchAllAuthors } from '../../store/authors/authors.actions';
 
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-
-import { fetchAllCourses } from '../../store/courses/coureses.actions';
-import { fetchAllAuthors } from '../../store/authors/authors.actions';
 
 import './courses.scss';
 
@@ -53,7 +52,7 @@ export const Courses = () => {
 				<Button buttonName={BUTTON_NAMES.addCourse} onClick={handleClickAddCourse} />
 			</div>
 
-			{filteredCourses.map(({ id, title, description, creationDate, duration, authors: authorsIdsList }) => (
+			{filteredCourses.map(({ id, title, description, creationDate, duration, authors }) => (
 				<CourseCard
 					key={id}
 					id={id}
@@ -61,14 +60,10 @@ export const Courses = () => {
 					description={description}
 					creationDate={creationDate}
 					duration={duration}
-					authorsIdsList={authorsIdsList}
+					authorsIdsList={authors}
 					authorsList={authorsList}
 				/>
 			))}
 		</div>
 	);
 };
-
-// 1 courseForUpdate: null
-// 2 courseForUpdate: {...sdasd}
-// 3 click -> update => courseForUpdate: null

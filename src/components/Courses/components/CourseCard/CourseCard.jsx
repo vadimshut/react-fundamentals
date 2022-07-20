@@ -8,21 +8,21 @@ import { pencil } from 'react-icons-kit/iconic/pencil';
 
 import { BUTTON_NAMES, ROUTES } from '../../../../constants';
 import { getRole } from '../../../../store/dataFromStore';
+import { fetchDeleteCourse } from '../../../../store/courses/coureses.actions';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
-import { getAuthors } from '../../../../helpers/getAuthors';
+import { getAuthorsString } from '../../../../helpers/getAuthors';
 
 import { Button } from '../../../../common/Button/Button';
 
 import './course-card.scss';
-import { fetchDeleteCourse } from '../../../../store/courses/coureses.actions';
 
 export const CourseCard = ({ title, description, creationDate, duration, authorsIdsList, authorsList, id }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const courseDuration = getCourseDuration(duration);
 	const courseCreationDate = formatCreationDate(creationDate);
-	const authorsToString = getAuthors(authorsIdsList, authorsList);
+	const authorsToString = getAuthorsString(authorsIdsList, authorsList);
 	const role = useSelector(getRole);
 
 	const isAdmin = role === 'admin';
@@ -32,7 +32,7 @@ export const CourseCard = ({ title, description, creationDate, duration, authors
 			replace: true,
 		});
 	};
-	//TODO
+
 	const handleDeleteCourse = useCallback(() => {
 		dispatch(fetchDeleteCourse(id));
 	}, [dispatch, id]);

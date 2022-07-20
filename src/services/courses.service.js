@@ -36,6 +36,24 @@ class CoursesService {
 			},
 		});
 	}
+
+	async getCourseById(id) {
+		return await fetch(`${this.baseUrl}/${id}`, {
+			method: 'GET',
+			headers: this.baseHeaders,
+		});
+	}
+
+	async updateCourse(id, body) {
+		return await fetch(`${this.baseUrl}/${id}`, {
+			method: 'PUT',
+			headers: {
+				...this.baseHeaders,
+				Authorization: this.authorityTokenService.getToken(),
+			},
+			body: body,
+		});
+	}
 }
 
 export const coursesService = new CoursesService(authorityTokenService);

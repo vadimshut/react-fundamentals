@@ -6,7 +6,7 @@ const getRegistrationData = (state) => ({
 });
 
 const getAuthors = (state) => state.authorsReducer.authors;
-
 const getCourses = (state) => state.coursesReducer.courses;
+const getCourseForUpdate = (state) => state.coursesReducer.courseForUpdate;
 
-export { getAuthData, getRegistrationData, getAuthors, getRole, getCourses };
+export { getAuthData, getRegistrationData, getAuthors, getRole, getCourses, getCourseForUpdate };
