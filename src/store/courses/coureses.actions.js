@@ -23,7 +23,7 @@ const fetchDeleteCourse = createAsyncThunk('/courses/fetchDeleteCourse', async (
 	return result.result;
 });
 
-const fetchGetCourseById = createAsyncThunk('/courses/fetchGetCourseById', async (id, { dispatch }) => {
+const fetchGetCourseById = createAsyncThunk('/courses/fetchGetCourseById', async (id) => {
 	const response = await coursesService.getCourseById(id);
 	const result = await response.json();
 	return result.result;

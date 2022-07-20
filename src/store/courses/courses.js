@@ -14,7 +14,7 @@ const coursesSlice = createSlice({
 			state.courses = state.courses.filter(({ id }) => id !== action.payload);
 		},
 		resetCourseForUpdate(state) {
-			state.courseForUpdate = null;
+			state.courseForUpdate = {};
 		},
 	},
 	extraReducers: (builder) => {

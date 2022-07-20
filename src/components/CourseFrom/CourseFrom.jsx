@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import { getAuthors } from '../../store/dataFromStore';
 import { checkValidate } from '../../helpers/checkValidate';
 import { fetchAddCourse, fetchUpdateCourse } from '../../store/courses/coureses.actions';
 import { createBody } from '../../helpers/createBody';
-import { useCreateProps } from './components/CourseFormContainer';
+import { CourseFromContainer } from './components/CourseFormContainer';
 
 import { Button } from '../../common/Button/Button';
 import { Input } from '../../common/Input/Input';
@@ -17,25 +17,34 @@ import { Authors } from './components/Authors/Authors';
 import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
 
 import './course-from.scss';
+import PropTypes from 'prop-types';
 
-export const CourseFrom = () => {
+export const CourseFromUI = ({
+	courseTitle,
+	courseDescription,
+	courseDuration,
+	courseSelectedAuthors,
+	buttonName,
+	courseId,
+}) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authorsList = useSelector(getAuthors);
-	const {
-		courseTitle,
-		courseDescription,
-		courseDuration,
-		courseSelectedAuthors,
-		buttonName,
-		id: idCourse,
-	} = useCreateProps();
+
+	console.log(courseTitle, courseDescription, courseDuration, courseSelectedAuthors, buttonName, courseId);
 
 	const [selectedAuthors, setSelectedAuthors] = useState(courseSelectedAuthors);
 	const [error, setError] = useState(false);
 	const [title, setTitle] = useState(courseTitle);
 	const [description, setDescription] = useState(courseDescription);
 	const [duration, setDuration] = useState(courseDuration);
+
+	useEffect(() => {
+		setSelectedAuthors(courseSelectedAuthors);
+		setTitle(courseTitle);
+		setDescription(courseDescription);
+		setDuration(courseDuration);
+	}, [courseTitle, courseDescription, courseDuration, courseSelectedAuthors]);
 
 	const availableAuthors = useMemo(() => {
 		return authorsList.filter(({ id }) => !selectedAuthors.map(({ id }) => id).includes(id));
@@ -75,7 +84,7 @@ export const CourseFrom = () => {
 
 		buttonName === BUTTON_NAMES.createCourse
 			? dispatch(fetchAddCourse(body))
-			: dispatch(fetchUpdateCourse({ id: idCourse, body }));
+			: dispatch(fetchUpdateCourse({ id: courseId, body }));
 
 		navigate(ROUTES.COURSES);
 	};
@@ -131,3 +140,22 @@ export const CourseFrom = () => {
 		</form>
 	);
 };
+
+CourseFromUI.propTypes = {
+	courseTitle: PropTypes.string,
+	courseDescription: PropTypes.string,
+	courseDuration: PropTypes.string,
+	courseSelectedAuthors: PropTypes.array,
+	buttonName: PropTypes.string,
+	courseId: PropTypes.string,
+};
+CourseFromUI.defaultProps = {
+	courseTitle: '',
+	courseDescription: '',
+	courseDuration: '',
+	courseSelectedAuthors: [],
+	buttonName: '',
+	courseId: '',
+};
+
+export const CourseFrom = CourseFromContainer(CourseFromUI);
