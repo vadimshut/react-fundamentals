@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +18,6 @@ import { Authors } from './components/Authors/Authors';
 import { DescriptionInput } from './components/DescriptionInput/DescriptionInput';
 
 import './course-from.scss';
-import PropTypes from 'prop-types';
 
 export const CourseFromUI = ({
 	courseTitle,
@@ -152,7 +152,7 @@ CourseFromUI.defaultProps = {
 	courseDescription: '',
 	courseDuration: '',
 	courseSelectedAuthors: [],
-	buttonName: '',
+	buttonName: BUTTON_NAMES.createCourse,
 	courseId: '',
 };
 
