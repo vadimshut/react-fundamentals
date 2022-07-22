@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BUTTON_NAMES } from '../../../constants';
-import { getAuthors, getCourseForUpdate } from '../../../store/dataFromStore';
+import { getAuthors, getCourseForUpdate } from '../../../store/selectors';
 import { fetchGetCourseById } from '../../../store/courses/coureses.actions';
 import { fetchAllAuthors } from '../../../store/authors/authors.actions';
 

@@ -7,7 +7,7 @@ import { initialState, reducer, init } from '../../helpers/reactReducer';
 
 import { createBody } from '../../helpers/createBody';
 import { fetchLogin } from '../../store/user/actions.user';
-import { getAuthData } from '../../store/dataFromStore';
+import { getAuthData } from '../../store/selectors';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';

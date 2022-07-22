@@ -8,11 +8,7 @@ const initialState = {
 const authorsSlice = createSlice({
 	name: 'authors',
 	initialState,
-	reducers: {
-		// addAuthor(state, action) {
-		// 	state.authors.push(action.payload);
-		// },
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllAuthors.fulfilled, (state, action) => {
 			state.authors = action.payload;

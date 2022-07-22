@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS, ROUTES } from '../../constants';
-import { getAuthors } from '../../store/dataFromStore';
+import { getAuthors } from '../../store/selectors';
 import { checkValidate } from '../../helpers/checkValidate';
 import { fetchAddCourse, fetchUpdateCourse } from '../../store/courses/coureses.actions';
 import { createBody } from '../../helpers/createBody';

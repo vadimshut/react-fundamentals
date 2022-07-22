@@ -7,7 +7,7 @@ import { ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
 import { createBody } from '../../helpers/createBody';
 import { fetchRegistration } from '../../store/user/actions.user';
-import { getRegistrationData } from '../../store/dataFromStore';
+import { getRegistrationData } from '../../store/selectors';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';

@@ -7,7 +7,7 @@ import { Button } from '../../common/Button/Button';
 import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogout } from '../../store/user/actions.user';
-import { getAuthData } from '../../store/dataFromStore';
+import { getAuthData } from '../../store/selectors';
 
 export const Header = () => {
 	const navigate = useNavigate();

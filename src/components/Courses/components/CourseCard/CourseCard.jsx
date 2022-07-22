@@ -7,7 +7,7 @@ import { trash } from 'react-icons-kit/iconic/trash';
 import { pencil } from 'react-icons-kit/iconic/pencil';
 
 import { BUTTON_NAMES, ROUTES } from '../../../../constants';
-import { getRole } from '../../../../store/dataFromStore';
+import { getRole } from '../../../../store/selectors';
 import { fetchDeleteCourse } from '../../../../store/courses/coureses.actions';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';

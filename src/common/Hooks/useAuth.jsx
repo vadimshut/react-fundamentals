@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getRole } from '../../store/dataFromStore';
+import { getRole } from '../../store/selectors';
 import { authorityTokenService } from '../../services/AuthorityTokenService';
 import { fetchUsersMe } from '../../store/user/actions.user';
 

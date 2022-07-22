@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { getRole } from '../../store/dataFromStore';
+import { getRole } from '../../store/selectors';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
