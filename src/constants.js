@@ -4,6 +4,7 @@ export const BUTTON_NAMES = {
 	search: 'Search',
 	addCourse: 'Add new course',
 	createCourse: 'Create course',
+	updateCourse: 'Update course',
 	createAuthor: 'Create author',
 	addAuthor: 'Add author',
 	deleteAuthor: 'Delete author',
@@ -15,8 +16,8 @@ export const ERROR_MESSAGES = {
 	moreThanZero: 'Value should bore than 0.',
 	moreThanOneAuthor: 'Should contain 1 or more authors.',
 	globalAlert: 'Please, fill in all fields',
-	logError:
-		'Before logging in as a new user, log out with the previous account',
+	logError: 'Before logging in as a new user, log out with the previous account',
+	reducerDefaultMessage: 'Error with action',
 };
 
 export const PLACEHOLDERS = {
@@ -35,21 +36,13 @@ export const USE_REDUCER_TYPES = {
 	RESET_FORM: 'resetForm',
 };
 
-export const ENDPOINTS = {
-	LOGIN: 'login',
-	REGISTRATION: 'register',
-};
-
-export const REQUEST_METHODS = {
-	GET: 'GET',
-	POST: 'POST',
-};
-
 export const ROUTES = {
 	ROOT: '/',
 	LOGIN: '/login',
 	REGISTRATION: '/registration',
 	COURSES: '/courses',
-	ADD_COURSE: '/courses/add',
-	COURSE_ID: '/courses/:courseId',
+	COURSES_LIST: '',
+	ADD_COURSE: 'add',
+	UPDATE_COURSE: 'update/:courseId',
+	COURSE_INFO_ID: ':courseId',
 };

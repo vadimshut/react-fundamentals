@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllAuthors } from './authors.actions';
+import { fetchAddAuthor, fetchAllAuthors } from './authors.actions';
 
 const initialState = {
 	authors: [],
@@ -8,29 +8,23 @@ const initialState = {
 const authorsSlice = createSlice({
 	name: 'authors',
 	initialState,
-	reducers: {
-		addAuthors(state, action) {
-			state.authors.push(action.payload);
-		},
-		deleteAuthors(state, action) {
-			state.authors.push(action.payload);
-		},
-		updateAuthors(state, action) {
-			state.authors.push(action.payload);
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllAuthors.fulfilled, (state, action) => {
 			state.authors = action.payload;
 		});
+
 		builder.addCase(fetchAllAuthors.rejected, (state) => {
 			state.authors = [];
+		});
+
+		builder.addCase(fetchAddAuthor.fulfilled, (state, action) => {
+			state.authors = [...state.authors, action.payload];
 		});
 	},
 });
 
-const getAuthors = (state) => state.authorsReducer.authors;
-const { addAuthors, deleteAuthors, updateAuthors } = authorsSlice.actions;
+// const { addAuthor } = authorsSlice.actions;
 const authorsReducer = authorsSlice.reducer;
 
-export { getAuthors, addAuthors, deleteAuthors, updateAuthors, authorsReducer };
+export { authorsReducer };

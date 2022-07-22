@@ -1,17 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './user.initialState';
-import { fetchLogin, fetchRegistration } from './actions.user';
+import { fetchLogin, fetchLogout, fetchRegistration, fetchUsersMe } from './actions.user';
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		logout(state) {
-			state.isAuth = false;
-			state.name = '';
-			state.email = '';
-			state.token = '';
-			state.error = '';
+		resetToDefault(state) {
+			state = initialState;
 		},
 	},
 	extraReducers: (builder) => {
@@ -42,15 +38,30 @@ const userSlice = createSlice({
 			state.registerSuccess = false;
 			state.registerError = action.payload;
 		});
+
+		builder.addCase(fetchLogout.fulfilled, (state) => {
+			state.isAuth = false;
+			state.name = '';
+			state.email = '';
+			state.token = '';
+			state.error = '';
+			state.registerError = '';
+			state.registerSuccess = false;
+			state.role = '';
+		});
+
+		builder.addCase(fetchUsersMe.fulfilled, (state, action) => {
+			const { name, email, role } = action.payload;
+			state.isAuth = true;
+			state.name = name;
+			state.email = email;
+			state.role = role;
+		});
 	},
 });
 
-const getAuthData = (state) => state.userReducer;
-const getRegistrationData = (state) => ({
-	registerSuccess: state.userReducer.registerSuccess,
-	registerError: state.userReducer.registerError,
-});
-const { logout } = userSlice.actions;
 const userReducer = userSlice.reducer;
 
-export { getAuthData, getRegistrationData, logout, userReducer };
+const { resetToDefault } = userSlice.actions;
+
+export { resetToDefault, userReducer };

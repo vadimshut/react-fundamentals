@@ -15,11 +15,7 @@ export const SearchBar = ({ onClick }) => {
 
 	return (
 		<div className='search-bar'>
-			<Input
-				placeholder={PLACEHOLDERS.search}
-				onChange={handleChange}
-				value={searchCourse}
-			/>
+			<Input placeholder={PLACEHOLDERS.search} onChange={handleChange} value={searchCourse} />
 			<Button buttonName={BUTTON_NAMES.search} onClick={handleClick} />
 		</div>
 	);

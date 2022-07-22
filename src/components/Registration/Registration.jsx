@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { initialState, reducer, init } from '../../helpers/reactReducer';
 import { ROUTES, USE_REDUCER_TYPES } from '../../constants';
+import { initialState, reducer, init } from '../../helpers/reactReducer';
 import { createBody } from '../../helpers/createBody';
-import { getRegistrationData } from '../../store/user/user';
 import { fetchRegistration } from '../../store/user/actions.user';
+import { getRegistrationData } from '../../store/selectors';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
@@ -17,12 +17,10 @@ import { Button } from '../../common/Button/Button';
 import './registration.scss';
 
 export const Registration = () => {
+	const navigate = useNavigate();
 	const dispatchRedux = useDispatch();
 	const { registerSuccess, registerError } = useSelector(getRegistrationData);
-
-	const [state, dispatch] = useReducer(reducer, initialState, init);
-	const navigate = useNavigate();
-	const { name, email, password, isError, errorMessage } = state;
+	const [{ name, email, password, isError, errorMessage }, dispatch] = useReducer(reducer, initialState, init);
 
 	const handleChangeName = useCallback((e) => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_NAME, payload: e.target.value });
@@ -38,13 +36,11 @@ export const Registration = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const body = createBody({ name, email, password });
-		dispatchRedux(fetchRegistration(body));
+		dispatchRedux(fetchRegistration(createBody({ name, email, password })));
 	};
 
 	useEffect(() => {
 		if (registerError || registerError.length > 0) {
-			console.log([...registerError]);
 			dispatch({
 				type: USE_REDUCER_TYPES.SET_ERROR,
 				payload: [...registerError],
@@ -66,13 +62,7 @@ export const Registration = () => {
 					<div>
 						<h1>Registration</h1>
 					</div>
-					<Input
-						placeholder='Enter name'
-						labelName='Name'
-						value={name}
-						onChange={handleChangeName}
-						required
-					/>
+					<Input placeholder='Enter name' labelName='Name' value={name} onChange={handleChangeName} required />
 
 					<Input
 						placeholder='Enter email'

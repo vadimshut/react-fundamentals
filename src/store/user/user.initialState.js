@@ -6,4 +6,5 @@ export const initialState = {
 	error: '',
 	registerError: '',
 	registerSuccess: false,
+	role: '',
 };

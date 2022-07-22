@@ -1,19 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllCourses, fetchAddCourse } from './coureses.actions';
+import { fetchAllCourses, fetchAddCourse, fetchGetCourseById, fetchUpdateCourse } from './coureses.actions';
 
 const initialState = {
 	courses: [],
+	courseForUpdate: {},
 };
 
 const coursesSlice = createSlice({
 	name: 'courses',
 	initialState,
 	reducers: {
-		addCourse(state, action) {
-			state.courses.push(action.payload);
-		},
 		deleteCourse(state, action) {
 			state.courses = state.courses.filter(({ id }) => id !== action.payload);
+		},
+		resetCourseForUpdate(state) {
+			state.courseForUpdate = {};
 		},
 	},
 	extraReducers: (builder) => {
@@ -25,16 +26,22 @@ const coursesSlice = createSlice({
 		});
 
 		builder.addCase(fetchAddCourse.fulfilled, (state, action) => {
-			state.courses = state.courses.push(action.payload);
+			state.courses = [...state.courses, action.payload];
 		});
-		builder.addCase(fetchAddCourse.rejected, (state, action) => {
-			console.log('error');
+
+		builder.addCase(fetchGetCourseById.fulfilled, (state, action) => {
+			state.courseForUpdate = action.payload;
+		});
+
+		builder.addCase(fetchUpdateCourse.fulfilled, (state, action) => {
+			state.courses = state.courses.map((course) => {
+				return course.id === action.payload.id ? action.payload : course;
+			});
 		});
 	},
 });
 
-const getCourses = (state) => state.coursesReducer.courses;
-const { addCourse, deleteCourse } = coursesSlice.actions;
+const { deleteCourse, resetCourseForUpdate } = coursesSlice.actions;
 const coursesReducer = coursesSlice.reducer;
 
-export { getCourses, addCourse, deleteCourse, coursesReducer };
+export { deleteCourse, resetCourseForUpdate, coursesReducer };

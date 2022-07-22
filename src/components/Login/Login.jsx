@@ -4,12 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { ERROR_MESSAGES, ROUTES, USE_REDUCER_TYPES } from '../../constants';
 import { initialState, reducer, init } from '../../helpers/reactReducer';
+
 import { createBody } from '../../helpers/createBody';
-import { Auth } from '../../helpers/auth';
-import { fetchLogin,  } from '../../store/user/actions.user';
-import {getAuthData} from '../../store/user/user'
-
-
+import { fetchLogin } from '../../store/user/actions.user';
+import { getAuthData } from '../../store/selectors';
 
 import { PageDecorator } from '../../common/Decorator/PageDecorator';
 import { Error } from '../../common/Error/Error';
@@ -19,12 +17,11 @@ import { Button } from '../../common/Button/Button';
 import './login.scss';
 
 export const Login = () => {
+	const navigate = useNavigate();
 	const dispatchRedux = useDispatch();
 	const { isAuth, token, error } = useSelector(getAuthData);
 
-	const [state, dispatch] = useReducer(reducer, initialState, init);
-	const { email, password, isError, errorMessage } = state;
-	const navigate = useNavigate();
+	const [{ email, password, errorMessage }, dispatch] = useReducer(reducer, initialState, init);
 
 	const handleChangeEmail = useCallback((e) => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_EMAIL, payload: e.target.value });
@@ -34,7 +31,7 @@ export const Login = () => {
 		dispatch({ type: USE_REDUCER_TYPES.SET_PASSWORD, payload: e.target.value });
 	}, []);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (isAuth) {
 			dispatch({
@@ -43,8 +40,7 @@ export const Login = () => {
 			});
 			return;
 		}
-		const body = createBody({ email, password });
-		dispatchRedux(fetchLogin(body));
+		dispatchRedux(fetchLogin(createBody({ email, password })));
 	};
 
 	useEffect(() => {
@@ -59,8 +55,7 @@ export const Login = () => {
 	useEffect(() => {
 		if (isAuth) {
 			dispatch({ type: USE_REDUCER_TYPES.RESET_FORM });
-			Auth.setAuthorization(token);
-			navigate(ROUTES.COURSES, { replace: true });
+			navigate(ROUTES.COURSES);
 		}
 	}, [isAuth, navigate, token]);
 
@@ -94,7 +89,7 @@ export const Login = () => {
 							Registration
 						</Link>
 					</div>
-					{isError && (
+					{error && (
 						<div className='error'>
 							<Error erorDescription={errorMessage} />
 						</div>

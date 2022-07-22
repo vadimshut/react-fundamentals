@@ -1,23 +1,19 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
-import {
-	BUTTON_NAMES,
-	ERROR_MESSAGES,
-	PLACEHOLDERS,
-} from '../../../../constants';
+import { useDispatch } from 'react-redux';
+import { BUTTON_NAMES, ERROR_MESSAGES, PLACEHOLDERS } from '../../../../constants';
+
+import { fetchAddAuthor } from '../../../../store/authors/authors.actions';
+import { createBody } from '../../../../helpers/createBody';
 
 import { Input } from '../../../../common/Input/Input';
 import { Button } from '../../../../common/Button/Button';
 
 import './add-author.scss';
-import { useDispatch } from 'react-redux';
-import { addAuthors } from '../../../../store/authors/authors';
 
-export const AddAuthor = ({ onClick }) => {
+export const AddAuthor = () => {
+	const dispatch = useDispatch();
 	const [name, setName] = useState('');
 	const [isError, setIsError] = useState(false);
-	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setName(e.target.value);
@@ -29,9 +25,7 @@ export const AddAuthor = ({ onClick }) => {
 			setIsError(true);
 			return;
 		}
-		const id = uuidv4();
-		onClick({ id, name });
-		dispatch(addAuthors({ name, id }));
+		dispatch(fetchAddAuthor(createBody({ name })));
 		setIsError(false);
 		setName('');
 	};
@@ -51,8 +45,4 @@ export const AddAuthor = ({ onClick }) => {
 			<Button buttonName={BUTTON_NAMES.createAuthor} onClick={handleClick} />
 		</div>
 	);
-};
-
-AddAuthor.propTypes = {
-	onClick: PropTypes.func.isRequired,
 };

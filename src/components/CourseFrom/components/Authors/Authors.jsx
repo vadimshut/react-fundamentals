@@ -1,28 +1,16 @@
 import PropTypes from 'prop-types';
 import { AuthorItem } from '../AuthorItem/AuthorItem';
-
-import './authors.scss';
 import { Error } from '../../../../common/Error/Error';
 
-export const Authors = ({
-	authorsList,
-	authorsTitle,
-	buttonAction,
-	onClick,
-	isError,
-	errorMessage,
-}) => {
+import './authors.scss';
+
+export const Authors = ({ authorsList, authorsTitle, buttonAction, onClick, isError, errorMessage }) => {
 	return (
 		<div className='authorsComponent'>
 			<div className='title'>{authorsTitle}</div>
 			{isError && <Error erorDescription={errorMessage} />}
 			{authorsList.map(({ name, id }) => (
-				<AuthorItem
-					key={id}
-					author={{ name, id }}
-					action={buttonAction}
-					onClick={onClick}
-				/>
+				<AuthorItem key={id} author={{ name, id }} action={buttonAction} onClick={onClick} />
 			))}
 		</div>
 	);

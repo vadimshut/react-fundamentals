@@ -1,24 +1,23 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
+import { getRole } from '../../store/selectors';
 import { BUTTON_NAMES, ROUTES } from '../../constants';
-
-import { getCourses } from '../../store/courses/courses';
-import { getAuthors } from '../../store/authors/authors';
-
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { PageDecorator } from '../../common/Decorator/PageDecorator';
+
+import { useGetCoursesAndAuthors } from '../../common/Hooks/useGetCoursesAndAuthors';
 
 import './courses.scss';
 
 export const Courses = () => {
-	const coursesList = useSelector(getCourses);
-	const authorsList = useSelector(getAuthors);
-
-	const [filteredCourses, setFilteredCourses] = useState([]);
 	const navigate = useNavigate();
+	const role = useSelector(getRole);
+	const isAdmin = role === 'admin';
+	const [filteredCourses, setFilteredCourses] = useState([]);
+	const { coursesList, authorsList } = useGetCoursesAndAuthors();
 
 	useMemo(() => {
 		setFilteredCourses(coursesList);
@@ -37,42 +36,28 @@ export const Courses = () => {
 	);
 
 	const handleClickAddCourse = () => {
-		navigate(ROUTES.ADD_COURSE, { replace: true });
+		navigate(ROUTES.ADD_COURSE);
 	};
 
 	return (
-		<PageDecorator>
-			<div className='courses'>
-				<div className='coursesControlsWrapper'>
-					<SearchBar onClick={handleClickSearch} />
-					<Button
-						buttonName={BUTTON_NAMES.addCourse}
-						onClick={handleClickAddCourse}
-					/>
-				</div>
-
-				{filteredCourses.map(
-					({
-						id,
-						title,
-						description,
-						creationDate,
-						duration,
-						authors: authorsIdsList,
-					}) => (
-						<CourseCard
-							key={id}
-							id={id}
-							title={title}
-							description={description}
-							creationDate={creationDate}
-							duration={duration}
-							authorsIdsList={authorsIdsList}
-							authorsList={authorsList}
-						/>
-					)
-				)}
+		<div className='courses'>
+			<div className='coursesControlsWrapper'>
+				<SearchBar onClick={handleClickSearch} />
+				{isAdmin && <Button buttonName={BUTTON_NAMES.addCourse} onClick={handleClickAddCourse} />}
 			</div>
-		</PageDecorator>
+
+			{filteredCourses.map(({ id, title, description, creationDate, duration, authors }) => (
+				<CourseCard
+					key={id}
+					id={id}
+					title={title}
+					description={description}
+					creationDate={creationDate}
+					duration={duration}
+					authorsIdsList={authors}
+					authorsList={authorsList}
+				/>
+			))}
+		</div>
 	);
 };
