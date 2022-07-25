@@ -24,7 +24,6 @@ const authorsSlice = createSlice({
 	},
 });
 
-// const { addAuthor } = authorsSlice.actions;
 const authorsReducer = authorsSlice.reducer;
 
 export { authorsReducer };

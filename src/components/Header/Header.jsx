@@ -25,7 +25,7 @@ export const Header = () => {
 			<Logo />
 			{isAuth && (
 				<div className='buttonWrapper'>
-					<div>{userName}</div>
+					<div data-testid='userName'>{userName}</div>
 					<Button buttonName={BUTTON_NAMES.logout} onClick={handleClick} />
 				</div>
 			)}

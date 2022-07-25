@@ -45,7 +45,9 @@ export const CourseCard = ({ title, description, creationDate, duration, authors
 		<div className='CourseCard'>
 			<div className='leftContainer '>
 				<div className='title '>
-					<b>{title}</b>
+					<b role='heading' aria-level='1'>
+						{title}
+					</b>
 				</div>
 				<div className='describe'>{description}</div>
 			</div>

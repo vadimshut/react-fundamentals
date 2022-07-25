@@ -5,11 +5,7 @@ import { fetchLogin, fetchLogout, fetchRegistration, fetchUsersMe } from './acti
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {
-		resetToDefault(state) {
-			state = initialState;
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchLogin.fulfilled, (state, action) => {
 			const {
@@ -62,6 +58,4 @@ const userSlice = createSlice({
 
 const userReducer = userSlice.reducer;
 
-const { resetToDefault } = userSlice.actions;
-
-export { resetToDefault, userReducer };
+export { userReducer };

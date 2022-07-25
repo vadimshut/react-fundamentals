@@ -13,7 +13,7 @@ export const CourseFromContainer = (WrappedComponent) => {
 	const HOC = () => {
 		const { courseId } = useParams();
 		const dispatch = useDispatch();
-		const { title, description, duration = '', authors = [], id } = useSelector(getCourseForUpdate);
+		const { title = '', description = '', duration = '', authors = [], id = '' } = useSelector(getCourseForUpdate);
 		const authorsList = useSelector(getAuthors);
 
 		useEffect(() => {
