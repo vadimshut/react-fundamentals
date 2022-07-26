@@ -88,6 +88,7 @@ export const CourseFromUI = ({
 	};
 
 	return (
+		// eslint-disable-next-line jsx-a11y/no-redundant-roles
 		<form className='container' id='formId' role='form' onSubmit={handleSubmit}>
 			<div className='titleNewCourse'>
 				<Input

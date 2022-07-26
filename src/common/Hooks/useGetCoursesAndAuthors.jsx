@@ -14,7 +14,7 @@ export const useGetCoursesAndAuthors = () => {
 			dispatch(fetchAllCourses());
 			dispatch(fetchAllAuthors());
 		}
-	}, [dispatch]);
+	}, [authorsList, coursesList, dispatch]);
 
 	return { coursesList, authorsList };
 };
