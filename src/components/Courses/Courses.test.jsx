@@ -10,21 +10,24 @@ jest.mock('../../services/AuthorityTokenService', () => {
 	return { authorityTokenService: { checkIsAuthorityTokenExist: () => true } };
 });
 
-describe('<Courses />', () => {
+describe('Courses component', () => {
 	afterEach(cleanup);
-
-	it('Courses should display amount of CourseCard equal length of courses array', () => {
-		const { container } = render(<Courses />, { wrapper: Wrapper });
-		const cards = container.querySelectorAll('.CourseCard');
-		const cardsFromStore = mockedStore.getState().coursesReducer.courses;
-		expect(cards.length).toBe(cardsFromStore.length);
+	describe('Render elements in courses component', () => {
+		it('should display amount of CourseCard equal length of courses array', () => {
+			const { container } = render(<Courses />, { wrapper: Wrapper });
+			const cards = container.querySelectorAll('.CourseCard');
+			const cardsFromStore = mockedStore.getState().coursesReducer.courses;
+			expect(cards.length).toBe(cardsFromStore.length);
+		});
 	});
 
-	it('CourseForm should be showed after a click on a button "Add new course"', async () => {
-		const user = userEvent.setup();
-		renderWithRouter(<App />);
-		const btnAddNewCourse = screen.getByText(BUTTON_NAMES.addCourse);
-		await user.click(btnAddNewCourse);
-		expect(screen.getByRole('form')).toBeInTheDocument();
+	describe('Buttons click in courses component', () => {
+		it('CourseForm should be showed after a click on a button "Add new course"', async () => {
+			const user = userEvent.setup();
+			renderWithRouter(<App />);
+			const btnAddNewCourse = screen.getByText(BUTTON_NAMES.addCourse);
+			await user.click(btnAddNewCourse);
+			expect(screen.getByRole('form')).toBeInTheDocument();
+		});
 	});
 });

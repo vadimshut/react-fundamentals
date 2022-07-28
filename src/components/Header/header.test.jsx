@@ -2,7 +2,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { Header } from './Header';
 import { Wrapper } from '../../common/utils-for-tests/wrapper';
 
-describe('<Header />', () => {
+describe('Header component', () => {
 	beforeEach(() => {
 		render(<Header />, { wrapper: Wrapper });
 	});
@@ -13,7 +13,7 @@ describe('<Header />', () => {
 		expect(logo).toBeInTheDocument();
 	});
 
-	it('user name should be exist', () => {
+	it('should contain userName and userName should be exist', () => {
 		const name = screen.getByTestId('userName');
 		expect(name).toBeInTheDocument();
 	});
