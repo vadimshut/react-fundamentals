@@ -88,7 +88,8 @@ export const CourseFromUI = ({
 	};
 
 	return (
-		<form className='container' id='formId' onSubmit={handleSubmit}>
+		// eslint-disable-next-line jsx-a11y/no-redundant-roles
+		<form className='container' id='formId' role='form' onSubmit={handleSubmit}>
 			<div className='titleNewCourse'>
 				<Input
 					placeholder={PLACEHOLDERS.courseTitle}

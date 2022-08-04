@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { ROUTES } from './constants';
 
@@ -14,58 +14,56 @@ import { CourseInfo } from './components/CourseInfo/CourseInfo';
 
 function App() {
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.COURSES} />} />
-				<Route path={ROUTES.LOGIN} element={<Login />} />
-				<Route path={ROUTES.REGISTRATION} element={<Registration />} />
+		<Routes>
+			<Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.COURSES} />} />
+			<Route path={ROUTES.LOGIN} element={<Login />} />
+			<Route path={ROUTES.REGISTRATION} element={<Registration />} />
+			<Route
+				path={ROUTES.COURSES}
+				element={
+					<PrivateRoute>
+						<CoursesRoutePage />
+					</PrivateRoute>
+				}
+			>
 				<Route
-					path={ROUTES.COURSES}
+					path={ROUTES.COURSES_LIST}
 					element={
 						<PrivateRoute>
-							<CoursesRoutePage />
+							<Courses />
 						</PrivateRoute>
 					}
-				>
-					<Route
-						path={ROUTES.COURSES_LIST}
-						element={
-							<PrivateRoute>
-								<Courses />
-							</PrivateRoute>
-						}
-					/>
+				/>
 
-					<Route
-						path={ROUTES.ADD_COURSE}
-						element={
-							<PrivateRoute checkParameter='role'>
-								<CourseFrom />
-							</PrivateRoute>
-						}
-					/>
+				<Route
+					path={ROUTES.ADD_COURSE}
+					element={
+						<PrivateRoute checkParameter='role'>
+							<CourseFrom />
+						</PrivateRoute>
+					}
+				/>
 
-					<Route
-						path={ROUTES.UPDATE_COURSE}
-						element={
-							<PrivateRoute checkParameter='role'>
-								<CourseFrom />
-							</PrivateRoute>
-						}
-					/>
+				<Route
+					path={ROUTES.UPDATE_COURSE}
+					element={
+						<PrivateRoute checkParameter='role'>
+							<CourseFrom />
+						</PrivateRoute>
+					}
+				/>
 
-					<Route
-						path={ROUTES.COURSE_INFO_ID}
-						element={
-							<PrivateRoute>
-								<CourseInfo />
-							</PrivateRoute>
-						}
-					/>
-				</Route>
-				<Route path='*' element={<Page404 />} />
-			</Routes>
-		</BrowserRouter>
+				<Route
+					path={ROUTES.COURSE_INFO_ID}
+					element={
+						<PrivateRoute>
+							<CourseInfo />
+						</PrivateRoute>
+					}
+				/>
+			</Route>
+			<Route path='*' element={<Page404 />} />
+		</Routes>
 	);
 }
 
